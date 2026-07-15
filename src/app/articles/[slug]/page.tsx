@@ -1,3 +1,4 @@
+import type { Metadata } from "next";
 import { notFound } from "next/navigation";
 import { MDXRemote } from "next-mdx-remote/rsc";
 import { getAllArticles, getArticleBySlug } from "@/lib/articles";
@@ -5,6 +6,31 @@ import AffiliateDisclosureNote from "@/components/AffiliateDisclosureNote";
 
 export function generateStaticParams() {
   return getAllArticles().map((article) => ({ slug: article.slug }));
+}
+
+// Only slugs returned by generateStaticParams (i.e. non-draft) are servable.
+export const dynamicParams = false;
+
+export async function generateMetadata({
+  params,
+}: {
+  params: Promise<{ slug: string }>;
+}): Promise<Metadata> {
+  const { slug } = await params;
+  const article = getArticleBySlug(slug);
+  if (!article) return {};
+
+  return {
+    title: article.frontmatter.title,
+    description: article.frontmatter.description,
+    alternates: { canonical: `/articles/${slug}` },
+    openGraph: {
+      title: article.frontmatter.title,
+      description: article.frontmatter.description,
+      type: "article",
+      publishedTime: article.frontmatter.publishedAt,
+    },
+  };
 }
 
 export default async function ArticlePage({

@@ -19,7 +19,7 @@ export type Article = {
   content: string;
 };
 
-export function getAllArticles(): Article[] {
+export function getAllArticles({ includeDrafts = false } = {}): Article[] {
   const files = fs.readdirSync(ARTICLES_DIR).filter((f) => f.endsWith(".mdx"));
 
   return files
@@ -29,6 +29,7 @@ export function getAllArticles(): Article[] {
       const { data, content } = matter(raw);
       return { slug, frontmatter: data as ArticleFrontmatter, content };
     })
+    .filter((article) => includeDrafts || !article.frontmatter.draft)
     .sort((a, b) => (a.frontmatter.publishedAt < b.frontmatter.publishedAt ? 1 : -1));
 }
 

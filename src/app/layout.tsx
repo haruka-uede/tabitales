@@ -14,7 +14,11 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata: Metadata = {
-  title: "Tabi Tales — Follow Japanese Novels to Their Real-World Settings",
+  metadataBase: new URL("https://japanese-novel-journey.com"),
+  title: {
+    default: "Tabi Tales — Follow Japanese Novels to Their Real-World Settings",
+    template: "%s | Tabi Tales",
+  },
   description:
     "Literary travel guides that connect Japanese novels to the real places behind them, for readers planning a trip to Japan.",
 };
