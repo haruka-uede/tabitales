@@ -49,7 +49,10 @@ export default function RootLayout({
         <footer className="border-t border-neutral-200 mt-16">
           <div className="max-w-4xl mx-auto px-6 py-8 text-sm text-neutral-500 flex justify-between">
             <span>© {new Date().getFullYear()} Tabi Tales</span>
-            <Link href="/disclosure">Affiliate Disclosure</Link>
+            <span className="flex gap-6">
+              <Link href="/contact">Contact</Link>
+              <Link href="/disclosure">Affiliate Disclosure</Link>
+            </span>
           </div>
         </footer>
       </body>
