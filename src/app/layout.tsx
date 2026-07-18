@@ -1,6 +1,8 @@
 import type { Metadata } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
 import Link from "next/link";
+import SearchBox from "@/components/SearchBox";
+import { getSearchIndex } from "@/lib/search";
 import "./globals.css";
 
 const geistSans = Geist({
@@ -28,6 +30,8 @@ export default function RootLayout({
 }: Readonly<{
   children: React.ReactNode;
 }>) {
+  const searchIndex = getSearchIndex();
+
   return (
     <html
       lang="en"
@@ -35,13 +39,15 @@ export default function RootLayout({
     >
       <body className="min-h-full flex flex-col">
         <header className="border-b border-neutral-200">
-          <div className="max-w-4xl mx-auto px-6 py-4 flex items-center justify-between">
+          <div className="max-w-4xl mx-auto px-6 py-4 flex items-center justify-between gap-6">
             <Link href="/" className="font-semibold text-lg">
               Tabi Tales
             </Link>
-            <nav className="text-sm flex gap-6 text-neutral-600">
+            <nav className="text-sm flex gap-6 text-neutral-600 items-center">
               <Link href="/articles">Guides</Link>
-              <Link href="/pillars">Authors</Link>
+              <Link href="/authors">Authors</Link>
+              <Link href="/destinations">Destinations</Link>
+              <SearchBox index={searchIndex} />
             </nav>
           </div>
         </header>

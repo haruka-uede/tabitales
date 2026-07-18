@@ -1,21 +1,21 @@
 import Link from "next/link";
 import { getAllArticles } from "@/lib/articles";
 
-const PILLARS = [
+const EXPLORE_LINKS = [
   {
-    name: "Haruki Murakami",
-    place: "Tokyo",
-    blurb: "Jazz bars, cafés, and city walks tied to his novels.",
+    href: "/authors",
+    label: "By Author",
+    blurb: "Start with a writer you already know.",
   },
   {
-    name: "Osamu Dazai",
-    place: "Tsugaru, Aomori",
-    blurb: "The rural northern hometown behind his memoir Tsugaru.",
+    href: "/destinations",
+    label: "By Destination",
+    blurb: "Already know where you're headed in Japan?",
   },
   {
-    name: "Keigo Higashino",
-    place: "Various",
-    blurb: "Real settings behind his mystery novels and their film adaptations.",
+    href: "/articles",
+    label: "All Guides",
+    blurb: "Browse every literary travel guide.",
   },
 ];
 
@@ -35,15 +35,18 @@ export default function Home() {
 
       <section className="mt-16">
         <h2 className="text-sm font-semibold uppercase tracking-wide text-neutral-500 mb-6">
-          Starting points
+          Explore
         </h2>
         <div className="grid sm:grid-cols-3 gap-6">
-          {PILLARS.map((pillar) => (
-            <div key={pillar.name} className="border border-neutral-200 rounded-lg p-5">
-              <p className="text-sm text-neutral-500">{pillar.place}</p>
-              <h3 className="font-medium mt-1">{pillar.name}</h3>
-              <p className="text-sm text-neutral-600 mt-2">{pillar.blurb}</p>
-            </div>
+          {EXPLORE_LINKS.map((link) => (
+            <Link
+              key={link.href}
+              href={link.href}
+              className="border border-neutral-200 rounded-lg p-5 hover:border-neutral-400 transition-colors"
+            >
+              <h3 className="font-medium">{link.label}</h3>
+              <p className="text-sm text-neutral-600 mt-2">{link.blurb}</p>
+            </Link>
           ))}
         </div>
       </section>

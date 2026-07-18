@@ -1,14 +1,16 @@
 import fs from "fs";
 import path from "path";
 import matter from "gray-matter";
+import { slugify } from "./slug";
 
 const ARTICLES_DIR = path.join(process.cwd(), "content", "articles");
 
 export type ArticleFrontmatter = {
   title: string;
   description: string;
-  pillar: string;
-  destination: string;
+  work: string;
+  authors: string[];
+  destinations: string[];
   publishedAt: string;
   draft?: boolean;
 };
@@ -17,6 +19,12 @@ export type Article = {
   slug: string;
   frontmatter: ArticleFrontmatter;
   content: string;
+};
+
+export type Facet = {
+  slug: string;
+  name: string;
+  articles: Article[];
 };
 
 export function getAllArticles({ includeDrafts = false } = {}): Article[] {
@@ -40,4 +48,41 @@ export function getArticleBySlug(slug: string): Article | null {
   const raw = fs.readFileSync(filePath, "utf-8");
   const { data, content } = matter(raw);
   return { slug, frontmatter: data as ArticleFrontmatter, content };
+}
+
+function groupByFacet(
+  articles: Article[],
+  getValues: (article: Article) => string[]
+): Facet[] {
+  const facets = new Map<string, Facet>();
+
+  for (const article of articles) {
+    for (const name of getValues(article)) {
+      const slug = slugify(name);
+      const existing = facets.get(slug);
+      if (existing) {
+        existing.articles.push(article);
+      } else {
+        facets.set(slug, { slug, name, articles: [article] });
+      }
+    }
+  }
+
+  return [...facets.values()].sort((a, b) => a.name.localeCompare(b.name));
+}
+
+export function getAllAuthors({ includeDrafts = false } = {}): Facet[] {
+  return groupByFacet(getAllArticles({ includeDrafts }), (a) => a.frontmatter.authors);
+}
+
+export function getAllDestinations({ includeDrafts = false } = {}): Facet[] {
+  return groupByFacet(getAllArticles({ includeDrafts }), (a) => a.frontmatter.destinations);
+}
+
+export function getArticlesByAuthor(slug: string): Article[] {
+  return getAllAuthors().find((a) => a.slug === slug)?.articles ?? [];
+}
+
+export function getArticlesByDestination(slug: string): Article[] {
+  return getAllDestinations().find((d) => d.slug === slug)?.articles ?? [];
 }

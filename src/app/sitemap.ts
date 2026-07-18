@@ -4,7 +4,7 @@ import { getAllArticles } from "@/lib/articles";
 const BASE_URL = "https://japanese-novel-journey.com";
 
 export default function sitemap(): MetadataRoute.Sitemap {
-  const staticRoutes = ["", "/articles", "/pillars", "/disclosure", "/contact"].map((route) => ({
+  const staticRoutes = ["", "/articles", "/authors", "/destinations", "/disclosure", "/contact"].map((route) => ({
     url: `${BASE_URL}${route}`,
     lastModified: new Date(),
   }));

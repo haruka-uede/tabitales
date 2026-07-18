@@ -12,10 +12,10 @@ export default function ArticlesIndexPage() {
           <li key={article.slug}>
             <Link href={`/articles/${article.slug}`} className="block group">
               <p className="text-sm uppercase tracking-wide text-neutral-500">
-                {article.frontmatter.destination}
+                {article.frontmatter.authors.join(", ")} · {article.frontmatter.destinations.join(", ")}
               </p>
               <h2 className="text-xl font-medium group-hover:underline">
-                {article.frontmatter.title}
+                {article.frontmatter.work}
               </h2>
               <p className="text-neutral-600">{article.frontmatter.description}</p>
             </Link>

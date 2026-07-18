@@ -45,7 +45,7 @@ export default async function ArticlePage({
   return (
     <article className="max-w-2xl mx-auto px-6 py-12 prose prose-neutral">
       <p className="text-sm uppercase tracking-wide text-neutral-500">
-        {article.frontmatter.destination}
+        {article.frontmatter.authors.join(", ")} · {article.frontmatter.destinations.join(", ")}
       </p>
       <h1>{article.frontmatter.title}</h1>
       <p className="text-neutral-600">{article.frontmatter.description}</p>
