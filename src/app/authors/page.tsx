@@ -18,7 +18,11 @@ export default function AuthorsPage() {
       <div className="space-y-10">
         {authors.map((author) => (
           <div key={author.slug} id={author.slug}>
-            <h2 className="text-xl font-medium">{author.name}</h2>
+            <h2 className="text-xl font-medium">
+              <Link href={`/authors/${author.slug}`} className="hover:underline">
+                {author.name}
+              </Link>
+            </h2>
             {AUTHOR_BLURBS[author.slug] && (
               <p className="text-neutral-600 mt-1">{AUTHOR_BLURBS[author.slug]}</p>
             )}

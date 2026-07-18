@@ -33,7 +33,7 @@ export function getSearchIndex(): SearchEntry[] {
   }
 
   for (const [slug, name] of authors) {
-    entries.push({ type: "author", label: name, href: `/authors#${slug}` });
+    entries.push({ type: "author", label: name, href: `/authors/${slug}` });
   }
   for (const [slug, name] of destinations) {
     entries.push({ type: "destination", label: name, href: `/destinations#${slug}` });

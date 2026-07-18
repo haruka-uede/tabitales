@@ -1,5 +1,5 @@
 import type { MetadataRoute } from "next";
-import { getAllArticles } from "@/lib/articles";
+import { getAllArticles, getAllAuthors } from "@/lib/articles";
 
 const BASE_URL = "https://japanese-novel-journey.com";
 
@@ -14,5 +14,10 @@ export default function sitemap(): MetadataRoute.Sitemap {
     lastModified: article.frontmatter.publishedAt,
   }));
 
-  return [...staticRoutes, ...articleRoutes];
+  const authorRoutes = getAllAuthors().map((author) => ({
+    url: `${BASE_URL}/authors/${author.slug}`,
+    lastModified: new Date(),
+  }));
+
+  return [...staticRoutes, ...articleRoutes, ...authorRoutes];
 }
