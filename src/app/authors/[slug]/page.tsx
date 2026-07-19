@@ -3,6 +3,7 @@ import Link from "next/link";
 import { notFound } from "next/navigation";
 import { getAllAuthors } from "@/lib/articles";
 import { AUTHOR_BLURBS } from "@/lib/authorProfiles";
+import { jsonLdScript } from "@/lib/site";
 
 export function generateStaticParams() {
   return getAllAuthors().map((author) => ({ slug: author.slug }));
@@ -34,8 +35,18 @@ export default async function AuthorPage({
   const author = getAllAuthors().find((a) => a.slug === slug);
   if (!author) notFound();
 
+  const personJsonLd = {
+    "@context": "https://schema.org",
+    "@type": "Person",
+    name: author.name,
+  };
+
   return (
     <div className="max-w-2xl mx-auto px-6 py-12">
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: jsonLdScript(personJsonLd) }}
+      />
       <p className="text-sm mb-6">
         <Link href="/authors" className="text-neutral-500 hover:underline">
           ← All authors

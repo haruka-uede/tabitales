@@ -3,6 +3,7 @@ import { Geist, Geist_Mono } from "next/font/google";
 import Link from "next/link";
 import SearchBox from "@/components/SearchBox";
 import { getSearchIndex } from "@/lib/search";
+import { SITE_NAME, SITE_URL, jsonLdScript } from "@/lib/site";
 import "./globals.css";
 
 const geistSans = Geist({
@@ -16,13 +17,20 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata: Metadata = {
-  metadataBase: new URL("https://japanese-novel-journey.com"),
+  metadataBase: new URL(SITE_URL),
   title: {
     default: "Tabi Tales — Follow Japanese Novels to Their Real-World Settings",
     template: "%s | Tabi Tales",
   },
   description:
     "Literary travel guides that connect Japanese novels to the real places behind them, for readers planning a trip to Japan.",
+};
+
+const organizationJsonLd = {
+  "@context": "https://schema.org",
+  "@type": "Organization",
+  name: SITE_NAME,
+  url: SITE_URL,
 };
 
 export default function RootLayout({
@@ -38,6 +46,10 @@ export default function RootLayout({
       className={`${geistSans.variable} ${geistMono.variable} h-full antialiased`}
     >
       <body className="min-h-full flex flex-col">
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{ __html: jsonLdScript(organizationJsonLd) }}
+        />
         <header className="border-b border-neutral-200">
           <div className="max-w-4xl mx-auto px-6 py-4 flex items-center justify-between gap-6">
             <Link href="/" className="font-semibold text-lg">
