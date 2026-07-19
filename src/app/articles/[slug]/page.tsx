@@ -6,6 +6,7 @@ import { getAllArticles, getArticleBySlug } from "@/lib/articles";
 import { slugify } from "@/lib/slug";
 import { SITE_NAME, SITE_URL, jsonLdScript } from "@/lib/site";
 import AffiliateDisclosureNote from "@/components/AffiliateDisclosureNote";
+import PlanYourTrip from "@/components/PlanYourTrip";
 
 export function generateStaticParams() {
   return getAllArticles().map((article) => ({ slug: article.slug }));
@@ -104,6 +105,12 @@ export default async function ArticlePage({
       <MDXRemote
         source={article.content}
         components={{ AffiliateDisclosureNote }}
+      />
+
+      <PlanYourTrip
+        work={article.frontmatter.work}
+        authors={article.frontmatter.authors}
+        destinations={article.frontmatter.destinations}
       />
     </article>
   );
