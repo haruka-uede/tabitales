@@ -21,6 +21,7 @@ export default function DestinationsMap({
 
   const byId = new Map(prefectures.map((p) => [p.id, p]));
   const active = activeId ? byId.get(activeId) : undefined;
+  const activeRegion = active ? REGION_OF_PREFECTURE[active.id] : null;
 
   return (
     <div className="grid sm:grid-cols-[1fr_260px] gap-6 mb-12">
@@ -31,7 +32,8 @@ export default function DestinationsMap({
         {JAPAN_MAP.locations.map((location) => {
           const data = byId.get(location.id);
           const hasArticles = !!data && data.articles.length > 0;
-          const isActive = activeId === location.id;
+          const isActiveRegion =
+            !!activeRegion && REGION_OF_PREFECTURE[location.id] === activeRegion;
 
           return (
             <path
@@ -43,13 +45,14 @@ export default function DestinationsMap({
               onMouseEnter={() => hasArticles && setActiveId(location.id)}
               onFocus={() => hasArticles && setActiveId(location.id)}
               onClick={() => hasArticles && setActiveId(location.id)}
-              className={
-                hasArticles
-                  ? isActive
-                    ? "fill-neutral-900 cursor-pointer outline-none"
-                    : "fill-neutral-500 hover:fill-neutral-700 cursor-pointer outline-none"
-                  : "fill-neutral-200"
-              }
+              className={[
+                isActiveRegion
+                  ? "fill-neutral-900"
+                  : hasArticles
+                    ? "fill-neutral-500 hover:fill-neutral-700"
+                    : "fill-neutral-200",
+                hasArticles ? "cursor-pointer outline-none" : "",
+              ].join(" ")}
             />
           );
         })}
@@ -58,8 +61,14 @@ export default function DestinationsMap({
       <div className="text-sm">
         {active ? (
           <div>
-            <p className="text-neutral-500">{REGION_OF_PREFECTURE[active.id]}</p>
-            <h3 className="text-lg font-medium mb-3">{active.name}</h3>
+            <Link href={`/${slugify(REGION_OF_PREFECTURE[active.id])}`} className="text-neutral-500 hover:underline">
+              {REGION_OF_PREFECTURE[active.id]}
+            </Link>
+            <h3 className="text-lg font-medium mb-3">
+              <Link href={`/${slugify(REGION_OF_PREFECTURE[active.id])}/${active.id}`} className="hover:underline">
+                {active.name}
+              </Link>
+            </h3>
 
             <ul className="space-y-3">
               {active.articles.map((article) => (
@@ -67,17 +76,19 @@ export default function DestinationsMap({
                   <Link href={`/articles/${article.slug}`} className="hover:underline">
                     {article.frontmatter.work}
                   </Link>
-                  <p className="text-neutral-500">{article.frontmatter.authors.join(", ")}</p>
+                  <p className="text-neutral-500">
+                    {article.frontmatter.authors.map((name, i) => (
+                      <span key={name}>
+                        {i > 0 && ", "}
+                        <Link href={`/authors/${slugify(name)}`} className="hover:underline">
+                          {name}
+                        </Link>
+                      </span>
+                    ))}
+                  </p>
                 </li>
               ))}
             </ul>
-
-            <Link
-              href={`/${slugify(REGION_OF_PREFECTURE[active.id])}/${active.id}`}
-              className="inline-block mt-4 underline"
-            >
-              View all {active.name} guides →
-            </Link>
           </div>
         ) : (
           <p className="text-neutral-500">
