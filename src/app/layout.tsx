@@ -26,6 +26,9 @@ export const metadata: Metadata = {
   },
   description:
     "Literary travel guides that connect Japanese novels to the real places behind them, for readers planning a trip to Japan.",
+  verification: {
+    google: "XB52W6aEfK4Itembl4aLLhIs9QyuU6nXeYSpZqyEuHc",
+  },
 };
 
 const organizationJsonLd = {
