@@ -7,4 +7,6 @@ export const AUTHOR_BLURBS: Record<string, string> = {
     "Dazai's memoir Tsugaru retraces his rural hometown in northern Japan, from his family's preserved mansion in Kanagi to the remote coastal village of Kodomari.",
   [slugify("Keigo Higashino")]:
     "A contemporary mystery writer whose novels — several adapted into hit films and shows — are tied to real, specific settings across Japan.",
+  [slugify("Natsume Soseki")]:
+    "Widely considered the most important novelist of modern Japan. His novels map onto real places he lived and taught — from a Shikoku bathhouse to a Tokyo cemetery where he's actually buried.",
 };
