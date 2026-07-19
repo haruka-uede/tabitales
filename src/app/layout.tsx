@@ -3,6 +3,7 @@ import { Geist, Geist_Mono } from "next/font/google";
 import Link from "next/link";
 import SearchBox from "@/components/SearchBox";
 import CookieNotice from "@/components/CookieNotice";
+import Analytics from "@/components/Analytics";
 import { getSearchIndex } from "@/lib/search";
 import { SITE_NAME, SITE_URL, jsonLdScript } from "@/lib/site";
 import "./globals.css";
@@ -76,6 +77,7 @@ export default function RootLayout({
           </div>
         </footer>
         <CookieNotice />
+        <Analytics />
       </body>
     </html>
   );

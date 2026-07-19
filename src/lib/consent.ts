@@ -10,6 +10,7 @@ export function getStoredConsent(): ConsentValue | null {
 
 export function setStoredConsent(value: ConsentValue): void {
   window.localStorage.setItem(STORAGE_KEY, value);
+  window.dispatchEvent(new Event("consent-changed"));
 }
 
 export function hasAnalyticsConsent(): boolean {
