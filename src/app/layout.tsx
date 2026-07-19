@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
 import Link from "next/link";
 import SearchBox from "@/components/SearchBox";
+import CookieNotice from "@/components/CookieNotice";
 import { getSearchIndex } from "@/lib/search";
 import { SITE_NAME, SITE_URL, jsonLdScript } from "@/lib/site";
 import "./globals.css";
@@ -70,9 +71,11 @@ export default function RootLayout({
             <span className="flex gap-6">
               <Link href="/contact">Contact</Link>
               <Link href="/disclosure">Affiliate Disclosure</Link>
+              <Link href="/privacy-policy">Privacy Policy</Link>
             </span>
           </div>
         </footer>
+        <CookieNotice />
       </body>
     </html>
   );

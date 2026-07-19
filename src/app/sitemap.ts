@@ -3,7 +3,7 @@ import { getAllArticles, getAllAuthors } from "@/lib/articles";
 import { SITE_URL } from "@/lib/site";
 
 export default function sitemap(): MetadataRoute.Sitemap {
-  const staticRoutes = ["", "/articles", "/authors", "/destinations", "/disclosure", "/contact"].map((route) => ({
+  const staticRoutes = ["", "/articles", "/authors", "/destinations", "/disclosure", "/privacy-policy", "/contact"].map((route) => ({
     url: `${SITE_URL}${route}`,
     lastModified: new Date(),
   }));
