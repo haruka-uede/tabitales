@@ -1,13 +1,18 @@
 import Link from "next/link";
 import { getAllDestinations, getArticlesByDestination } from "@/lib/articles";
-import { JAPAN_MAP, PREFECTURE_IDS, REGION_OF_PREFECTURE } from "@/lib/japanMap";
+import { JAPAN_MAP, PREFECTURE_IDS, REGION_NAMES, REGION_OF_PREFECTURE } from "@/lib/japanMap";
 import { slugify } from "@/lib/slug";
 import DestinationsMap from "@/components/DestinationsMap";
 
 export const metadata = { title: "Destinations" };
 
 export default function DestinationsPage() {
-  const destinations = getAllDestinations();
+  // Only the region-level heading is shown for now - once a region or
+  // prefecture has enough articles to be worth its own heading, add that
+  // breakdown here (destination tags already carry the full hierarchy,
+  // so this is a display change only, not a re-tagging one).
+  const regionSlugs = new Set(REGION_NAMES.map(slugify));
+  const destinations = getAllDestinations().filter((d) => regionSlugs.has(d.slug));
   const prefectures = JAPAN_MAP.locations.map((location) => {
     const direct = getArticlesByDestination(location.id);
 
