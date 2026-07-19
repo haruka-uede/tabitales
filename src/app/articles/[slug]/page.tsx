@@ -4,6 +4,7 @@ import { notFound } from "next/navigation";
 import { MDXRemote } from "next-mdx-remote/rsc";
 import { getAllArticles, getArticleBySlug } from "@/lib/articles";
 import { slugify } from "@/lib/slug";
+import { getDestinationHref } from "@/lib/japanMap";
 import { SITE_NAME, SITE_URL, jsonLdScript } from "@/lib/site";
 import AffiliateDisclosureNote from "@/components/AffiliateDisclosureNote";
 import PlanYourTrip from "@/components/PlanYourTrip";
@@ -97,7 +98,21 @@ export default async function ArticlePage({
           </span>
         ))}
         {" · "}
-        {article.frontmatter.destinations.join(", ")}
+        {article.frontmatter.destinations.map((name, i) => {
+          const href = getDestinationHref(name);
+          return (
+            <span key={name}>
+              {i > 0 && ", "}
+              {href ? (
+                <Link href={href} className="underline">
+                  {name}
+                </Link>
+              ) : (
+                name
+              )}
+            </span>
+          );
+        })}
       </p>
       <h1>{article.frontmatter.title}</h1>
       <p className="text-neutral-600">{article.frontmatter.description}</p>

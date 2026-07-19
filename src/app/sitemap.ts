@@ -1,5 +1,7 @@
 import type { MetadataRoute } from "next";
-import { getAllArticles, getAllAuthors } from "@/lib/articles";
+import { getAllArticles, getAllAuthors, getArticlesByDestination } from "@/lib/articles";
+import { JAPAN_MAP, REGION_NAMES, REGION_OF_PREFECTURE } from "@/lib/japanMap";
+import { slugify } from "@/lib/slug";
 import { SITE_URL } from "@/lib/site";
 
 export default function sitemap(): MetadataRoute.Sitemap {
@@ -18,5 +20,25 @@ export default function sitemap(): MetadataRoute.Sitemap {
     lastModified: new Date(),
   }));
 
-  return [...staticRoutes, ...articleRoutes, ...authorRoutes];
+  const regionRoutes = REGION_NAMES.filter(
+    (name) => getArticlesByDestination(slugify(name)).length > 0
+  ).map((name) => ({
+    url: `${SITE_URL}/${slugify(name)}`,
+    lastModified: new Date(),
+  }));
+
+  const prefectureRoutes = JAPAN_MAP.locations
+    .filter((location) => getArticlesByDestination(location.id).length > 0)
+    .map((location) => ({
+      url: `${SITE_URL}/${slugify(REGION_OF_PREFECTURE[location.id])}/${location.id}`,
+      lastModified: new Date(),
+    }));
+
+  return [
+    ...staticRoutes,
+    ...articleRoutes,
+    ...authorRoutes,
+    ...regionRoutes,
+    ...prefectureRoutes,
+  ];
 }

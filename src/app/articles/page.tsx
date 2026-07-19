@@ -1,6 +1,7 @@
 import Link from "next/link";
 import { getAllArticles } from "@/lib/articles";
 import { slugify } from "@/lib/slug";
+import { getDestinationHref } from "@/lib/japanMap";
 
 export default function ArticlesIndexPage() {
   const articles = getAllArticles();
@@ -21,7 +22,21 @@ export default function ArticlesIndexPage() {
                 </span>
               ))}
               {" · "}
-              {article.frontmatter.destinations.join(", ")}
+              {article.frontmatter.destinations.map((name, i) => {
+                const href = getDestinationHref(name);
+                return (
+                  <span key={name}>
+                    {i > 0 && ", "}
+                    {href ? (
+                      <Link href={href} className="hover:underline">
+                        {name}
+                      </Link>
+                    ) : (
+                      name
+                    )}
+                  </span>
+                );
+              })}
             </p>
             <Link href={`/articles/${article.slug}`} className="block group">
               <h2 className="text-xl font-medium group-hover:underline">

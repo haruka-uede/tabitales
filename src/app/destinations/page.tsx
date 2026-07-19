@@ -1,32 +1,21 @@
 import Link from "next/link";
 import { getAllDestinations, getArticlesByDestination } from "@/lib/articles";
-import { JAPAN_MAP, PREFECTURE_IDS, REGION_NAMES, REGION_OF_PREFECTURE } from "@/lib/japanMap";
+import { JAPAN_MAP, REGION_NAMES } from "@/lib/japanMap";
 import { slugify } from "@/lib/slug";
 import DestinationsMap from "@/components/DestinationsMap";
 
 export const metadata = { title: "Destinations" };
 
 export default function DestinationsPage() {
-  // Only the region-level heading is shown for now - once a region or
-  // prefecture has enough articles to be worth its own heading, add that
-  // breakdown here (destination tags already carry the full hierarchy,
-  // so this is a display change only, not a re-tagging one).
+  // Only the region-level heading is shown for now - once municipality-level
+  // coverage grows, revisit whether it needs its own listing here too.
   const regionSlugs = new Set(REGION_NAMES.map(slugify));
   const destinations = getAllDestinations().filter((d) => regionSlugs.has(d.slug));
-  const prefectures = JAPAN_MAP.locations.map((location) => {
-    const direct = getArticlesByDestination(location.id);
-
-    // Articles tagged only at the region level (no prefecture-level tag yet,
-    // per the destination tagging rule) light up every prefecture in that
-    // region, since we don't know a more specific location for them.
-    const regionSlug = slugify(REGION_OF_PREFECTURE[location.id]);
-    const regionOnly = getArticlesByDestination(regionSlug).filter(
-      (article) =>
-        !article.frontmatter.destinations.some((d) => PREFECTURE_IDS.has(slugify(d)))
-    );
-
-    return { id: location.id, name: location.name, direct, regionOnly };
-  });
+  const prefectures = JAPAN_MAP.locations.map((location) => ({
+    id: location.id,
+    name: location.name,
+    articles: getArticlesByDestination(location.id),
+  }));
 
   return (
     <div className="max-w-4xl mx-auto px-6 py-12">
@@ -40,8 +29,12 @@ export default function DestinationsPage() {
 
       <div className="max-w-2xl space-y-10">
         {destinations.map((destination) => (
-          <div key={destination.slug} id={destination.slug}>
-            <h2 className="text-xl font-medium">{destination.name}</h2>
+          <div key={destination.slug}>
+            <h2 className="text-xl font-medium">
+              <Link href={`/${destination.slug}`} className="hover:underline">
+                {destination.name}
+              </Link>
+            </h2>
             <ul className="mt-3 space-y-1">
               {destination.articles.map((article) => (
                 <li key={article.slug}>

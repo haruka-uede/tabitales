@@ -1,5 +1,6 @@
 import { getAllArticles } from "./articles";
 import { slugify } from "./slug";
+import { getDestinationHref } from "./japanMap";
 
 export type SearchEntry = {
   type: "work" | "author" | "destination";
@@ -35,8 +36,12 @@ export function getSearchIndex(): SearchEntry[] {
   for (const [slug, name] of authors) {
     entries.push({ type: "author", label: name, href: `/authors/${slug}` });
   }
-  for (const [slug, name] of destinations) {
-    entries.push({ type: "destination", label: name, href: `/destinations#${slug}` });
+  for (const [, name] of destinations) {
+    entries.push({
+      type: "destination",
+      label: name,
+      href: getDestinationHref(name) ?? "/destinations",
+    });
   }
 
   return entries;
