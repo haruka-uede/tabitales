@@ -9,6 +9,7 @@
     "lint": "eslint"
   },
   "dependencies": {
+    "@svg-maps/japan": "^2.0.0",
     "fuse.js": "^7.5.0",
     "gray-matter": "^4.0.3",
     "next": "16.2.10",
