@@ -8,7 +8,8 @@ import type { Article } from "@/lib/articles";
 type PrefectureData = {
   id: string;
   name: string;
-  articles: Article[];
+  direct: Article[];
+  regionOnly: Article[];
 };
 
 export default function DestinationsMap({
@@ -29,7 +30,7 @@ export default function DestinationsMap({
       >
         {JAPAN_MAP.locations.map((location) => {
           const data = byId.get(location.id);
-          const hasArticles = !!data && data.articles.length > 0;
+          const hasArticles = !!data && data.direct.length + data.regionOnly.length > 0;
           const isActive = activeId === location.id;
 
           return (
@@ -59,16 +60,37 @@ export default function DestinationsMap({
           <div>
             <p className="text-neutral-500">{REGION_OF_PREFECTURE[active.id]}</p>
             <h3 className="text-lg font-medium mb-3">{active.name}</h3>
-            <ul className="space-y-3">
-              {active.articles.map((article) => (
-                <li key={article.slug}>
-                  <Link href={`/articles/${article.slug}`} className="hover:underline">
-                    {article.frontmatter.work}
-                  </Link>
-                  <p className="text-neutral-500">{article.frontmatter.authors.join(", ")}</p>
-                </li>
-              ))}
-            </ul>
+
+            {active.direct.length > 0 && (
+              <ul className="space-y-3">
+                {active.direct.map((article) => (
+                  <li key={article.slug}>
+                    <Link href={`/articles/${article.slug}`} className="hover:underline">
+                      {article.frontmatter.work}
+                    </Link>
+                    <p className="text-neutral-500">{article.frontmatter.authors.join(", ")}</p>
+                  </li>
+                ))}
+              </ul>
+            )}
+
+            {active.regionOnly.length > 0 && (
+              <div className={active.direct.length > 0 ? "mt-4" : ""}>
+                <p className="text-neutral-500">
+                  Elsewhere in {REGION_OF_PREFECTURE[active.id]}
+                </p>
+                <ul className="space-y-3 mt-1">
+                  {active.regionOnly.map((article) => (
+                    <li key={article.slug}>
+                      <Link href={`/articles/${article.slug}`} className="hover:underline">
+                        {article.frontmatter.work}
+                      </Link>
+                      <p className="text-neutral-500">{article.frontmatter.authors.join(", ")}</p>
+                    </li>
+                  ))}
+                </ul>
+              </div>
+            )}
           </div>
         ) : (
           <p className="text-neutral-500">

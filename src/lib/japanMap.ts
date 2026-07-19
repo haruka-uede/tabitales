@@ -14,6 +14,8 @@ export type JapanMap = {
 
 export const JAPAN_MAP = japanMapData as unknown as JapanMap;
 
+export const PREFECTURE_IDS = new Set(JAPAN_MAP.locations.map((location) => location.id));
+
 export const REGION_OF_PREFECTURE: Record<string, string> = {
   hokkaido: "Hokkaido",
   aomori: "Tohoku",
