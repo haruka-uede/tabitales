@@ -9,7 +9,7 @@ export default function PrivacyPolicyPage() {
       <p>
         Tabi Tales (&ldquo;we,&rdquo; &ldquo;us,&rdquo; or &ldquo;this site&rdquo;) is an
         independent, unofficial literary travel guide. This policy explains what
-        information we collect when you visit japanese-novel-journey.com, how we use
+        information we collect when you visit tabitales.jp, how we use
         it, and the choices you have.
       </p>
 
