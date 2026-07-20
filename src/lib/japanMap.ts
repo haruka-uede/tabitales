@@ -64,7 +64,7 @@ export const REGION_OF_PREFECTURE: Record<string, string> = {
   oita: "Kyushu",
   miyazaki: "Kyushu",
   kagoshima: "Kyushu",
-  okinawa: "Okinawa",
+  okinawa: "Kyushu",
 };
 
 export const REGION_NAMES = [...new Set(Object.values(REGION_OF_PREFECTURE))];
