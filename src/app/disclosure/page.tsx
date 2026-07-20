@@ -1,6 +1,6 @@
 export default function DisclosurePage() {
   return (
-    <div className="max-w-2xl mx-auto px-6 py-12 prose prose-neutral">
+    <div className="max-w-2xl mx-auto px-6 py-12 prose prose-neutral dark:prose-invert">
       <h1>Affiliate Disclosure</h1>
       <p>
         Tabi Tales is a reader-supported publication. When you book a hotel, tour, or

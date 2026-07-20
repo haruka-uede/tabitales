@@ -3,6 +3,8 @@ import {
   getHotelAffiliateLink,
   getTourAffiliateLink,
 } from "@/lib/affiliate";
+import { Button } from "@/components/ui/button";
+import { Separator } from "@/components/ui/separator";
 
 export default function PlanYourTrip({
   work,
@@ -22,19 +24,18 @@ export default function PlanYourTrip({
   if (links.length === 0) return null;
 
   return (
-    <div className="border-t border-neutral-200 pt-6 mt-8 not-prose">
-      <p className="text-sm font-semibold uppercase tracking-wide text-neutral-500 mb-3">
+    <div className="pt-6 mt-8 not-prose">
+      <Separator className="mb-6" />
+      <p className="text-sm font-semibold uppercase tracking-wide text-muted-foreground mb-3">
         Plan your trip
       </p>
-      <ul className="space-y-1 text-sm">
+      <div className="flex flex-wrap gap-2">
         {links.map((link) => (
-          <li key={link.href}>
-            <a href={link.href} target="_blank" rel="sponsored noopener" className="underline">
-              {link.label}
-            </a>
-          </li>
+          <Button key={link.href} variant="outline" render={<a href={link.href} target="_blank" rel="sponsored noopener" />}>
+            {link.label}
+          </Button>
         ))}
-      </ul>
+      </div>
     </div>
   );
 }

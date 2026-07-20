@@ -52,6 +52,8 @@ export default function DestinationsMap({
           }
         : { x: bbox.x, y: bbox.y, width: bbox.width, height: bbox.height };
     }
+    // getBBox() needs the SVG paths to be painted first, so this can only run post-mount.
+    // eslint-disable-next-line react-hooks/set-state-in-effect
     setRegionBoxes(boxes);
   }, []);
 
@@ -62,7 +64,7 @@ export default function DestinationsMap({
     <div className="grid sm:grid-cols-[1fr_260px] gap-6 mb-12">
       <svg
         viewBox={JAPAN_MAP.viewBox}
-        className="w-full h-auto border border-neutral-200 rounded-lg bg-neutral-50"
+        className="w-full h-auto border border-border rounded-lg bg-muted"
       >
         {JAPAN_MAP.locations.map((location) => {
           const region = REGION_OF_PREFECTURE[location.id];
@@ -77,7 +79,7 @@ export default function DestinationsMap({
               }}
               d={location.path}
               className={
-                isHovered ? "fill-neutral-900" : hasArticles ? "fill-neutral-500" : "fill-neutral-200"
+                isHovered ? "fill-foreground" : hasArticles ? "fill-muted-foreground" : "fill-border"
               }
             />
           );
@@ -108,12 +110,12 @@ export default function DestinationsMap({
         {hoveredRegion ? (
           <div>
             <h3 className="text-lg font-medium mb-1">{hoveredRegion}</h3>
-            <p className="text-neutral-500">
+            <p className="text-muted-foreground">
               {regionArticleCount(hoveredRegion)} guide{regionArticleCount(hoveredRegion) === 1 ? "" : "s"}
             </p>
           </div>
         ) : (
-          <p className="text-neutral-500">Tap a highlighted region to see its guides.</p>
+          <p className="text-muted-foreground">Tap a highlighted region to see its guides.</p>
         )}
       </div>
     </div>

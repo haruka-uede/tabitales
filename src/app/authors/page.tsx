@@ -1,6 +1,9 @@
 import Link from "next/link";
 import { getAllAuthors } from "@/lib/articles";
-import { AUTHOR_BLURBS } from "@/lib/authorProfiles";
+import { AUTHOR_BLURBS, getAuthorInitials } from "@/lib/authorProfiles";
+import { Card, CardHeader, CardTitle, CardDescription, CardContent } from "@/components/ui/card";
+import { Avatar, AvatarFallback } from "@/components/ui/avatar";
+import { Badge } from "@/components/ui/badge";
 
 export const metadata = { title: "Authors" };
 
@@ -8,34 +11,43 @@ export default function AuthorsPage() {
   const authors = getAllAuthors();
 
   return (
-    <div className="max-w-2xl mx-auto px-6 py-12">
+    <div className="max-w-4xl mx-auto px-6 py-12">
       <h1 className="text-3xl font-semibold mb-4">Authors We Follow</h1>
-      <p className="text-neutral-600 mb-10">
+      <p className="text-muted-foreground mb-10 max-w-2xl">
         Tabi Tales is an independent, unofficial fan project. We are not affiliated
         with or endorsed by any of the authors, publishers, or rights holders
         mentioned below.
       </p>
-      <div className="space-y-10">
+      <div className="grid sm:grid-cols-2 gap-6">
         {authors.map((author) => (
-          <div key={author.slug} id={author.slug}>
-            <h2 className="text-xl font-medium">
-              <Link href={`/authors/${author.slug}`} className="hover:underline">
-                {author.name}
-              </Link>
-            </h2>
-            {AUTHOR_BLURBS[author.slug] && (
-              <p className="text-neutral-600 mt-1">{AUTHOR_BLURBS[author.slug]}</p>
-            )}
-            <ul className="mt-3 space-y-1">
-              {author.articles.map((article) => (
-                <li key={article.slug}>
-                  <Link href={`/articles/${article.slug}`} className="text-sm hover:underline">
-                    {article.frontmatter.work}
+          <Card key={author.slug} id={author.slug}>
+            <CardHeader className="flex-row items-center gap-3 space-y-0">
+              <Avatar size="lg">
+                <AvatarFallback>{getAuthorInitials(author.name)}</AvatarFallback>
+              </Avatar>
+              <div>
+                <CardTitle>
+                  <Link href={`/authors/${author.slug}`} className="hover:underline">
+                    {author.name}
                   </Link>
-                </li>
-              ))}
-            </ul>
-          </div>
+                </CardTitle>
+                {AUTHOR_BLURBS[author.slug] && (
+                  <CardDescription className="mt-1">{AUTHOR_BLURBS[author.slug]}</CardDescription>
+                )}
+              </div>
+            </CardHeader>
+            <CardContent>
+              <div className="flex flex-wrap gap-1.5">
+                {author.articles.map((article) => (
+                  <Link key={article.slug} href={`/articles/${article.slug}`}>
+                    <Badge variant="outline" className="cursor-pointer">
+                      {article.frontmatter.work}
+                    </Badge>
+                  </Link>
+                ))}
+              </div>
+            </CardContent>
+          </Card>
         ))}
       </div>
     </div>

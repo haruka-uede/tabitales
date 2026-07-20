@@ -4,6 +4,7 @@ import { notFound } from "next/navigation";
 import { getArticlesByDestination } from "@/lib/articles";
 import { JAPAN_MAP, REGION_OF_PREFECTURE } from "@/lib/japanMap";
 import { slugify } from "@/lib/slug";
+import ArticleCard from "@/components/ArticleCard";
 
 export function generateStaticParams() {
   return JAPAN_MAP.locations
@@ -46,25 +47,18 @@ export default async function PrefecturePage({
   const regionName = REGION_OF_PREFECTURE[location.id];
 
   return (
-    <div className="max-w-2xl mx-auto px-6 py-12">
+    <div className="max-w-4xl mx-auto px-6 py-12">
       <p className="text-sm mb-6">
-        <Link href={`/${region}`} className="text-neutral-500 hover:underline">
+        <Link href={`/${region}`} className="text-muted-foreground hover:underline">
           ← {regionName}
         </Link>
       </p>
       <h1 className="text-3xl font-semibold mb-8">{location.name}</h1>
-      <ul className="space-y-6">
+      <div className="grid sm:grid-cols-2 gap-6">
         {articles.map((article) => (
-          <li key={article.slug}>
-            <Link href={`/articles/${article.slug}`} className="block group">
-              <h2 className="text-xl font-medium group-hover:underline">
-                {article.frontmatter.work}
-              </h2>
-              <p className="text-neutral-600">{article.frontmatter.description}</p>
-            </Link>
-          </li>
+          <ArticleCard key={article.slug} article={article} />
         ))}
-      </ul>
+      </div>
     </div>
   );
 }

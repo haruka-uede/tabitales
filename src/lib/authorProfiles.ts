@@ -1,5 +1,10 @@
 import { slugify } from "./slug";
 
+export function getAuthorInitials(name: string): string {
+  const words = name.split(" ").filter(Boolean);
+  return ((words[0]?.[0] ?? "") + (words[words.length - 1]?.[0] ?? "")).toUpperCase();
+}
+
 export const AUTHOR_BLURBS: Record<string, string> = {
   [slugify("Haruki Murakami")]:
     "One of the most internationally recognized Japanese novelists. His Tokyo — jazz bars, quiet cafés, city walks — is a recurring backdrop across his fiction.",

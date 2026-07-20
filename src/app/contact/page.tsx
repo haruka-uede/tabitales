@@ -1,5 +1,7 @@
 import type { Metadata } from "next";
 
+import { Button } from "@/components/ui/button";
+
 export const metadata: Metadata = {
   title: "Contact",
   description: "Get in touch with Tabi Tales — questions, corrections, or rights concerns.",
@@ -13,7 +15,7 @@ export default function ContactPage() {
   return (
     <div className="max-w-2xl mx-auto px-6 py-12">
       <h1 className="text-3xl font-semibold mb-4">Contact</h1>
-      <p className="text-neutral-600 mb-8">
+      <p className="text-muted-foreground mb-8">
         Questions about a guide, a correction to suggest, or a concern about how your
         work is represented here? Send a message below.
       </p>
@@ -32,7 +34,7 @@ export default function ContactPage() {
               type="text"
               name="name"
               required
-              className="w-full border border-neutral-300 rounded-md px-3 py-2"
+              className="w-full border border-border bg-background rounded-md px-3 py-2"
             />
           </div>
           <div>
@@ -42,7 +44,7 @@ export default function ContactPage() {
               type="email"
               name="email"
               required
-              className="w-full border border-neutral-300 rounded-md px-3 py-2"
+              className="w-full border border-border bg-background rounded-md px-3 py-2"
             />
           </div>
           <div>
@@ -52,15 +54,12 @@ export default function ContactPage() {
               name="message"
               required
               rows={5}
-              className="w-full border border-neutral-300 rounded-md px-3 py-2"
+              className="w-full border border-border bg-background rounded-md px-3 py-2"
             />
           </div>
-          <button
-            type="submit"
-            className="bg-neutral-900 text-white rounded-md px-5 py-2 font-medium hover:bg-neutral-700"
-          >
+          <Button type="submit" size="lg">
             Send
-          </button>
+          </Button>
         </form>
       ) : (
         <p className="text-sm text-amber-700 bg-amber-50 border border-amber-200 rounded-md p-4">

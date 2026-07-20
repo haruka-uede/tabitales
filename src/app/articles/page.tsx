@@ -1,52 +1,17 @@
-import Link from "next/link";
 import { getAllArticles } from "@/lib/articles";
-import { slugify } from "@/lib/slug";
-import { getDestinationHref } from "@/lib/japanMap";
+import ArticleCard from "@/components/ArticleCard";
 
 export default function ArticlesIndexPage() {
   const articles = getAllArticles();
 
   return (
-    <div className="max-w-2xl mx-auto px-6 py-12">
+    <div className="max-w-4xl mx-auto px-6 py-12">
       <h1 className="text-3xl font-semibold mb-8">Literary Travel Guides</h1>
-      <ul className="space-y-6">
+      <div className="grid sm:grid-cols-2 gap-6">
         {articles.map((article) => (
-          <li key={article.slug}>
-            <p className="text-sm uppercase tracking-wide text-neutral-500">
-              {article.frontmatter.authors.map((name, i) => (
-                <span key={name}>
-                  {i > 0 && ", "}
-                  <Link href={`/authors/${slugify(name)}`} className="hover:underline">
-                    {name}
-                  </Link>
-                </span>
-              ))}
-              {" · "}
-              {article.frontmatter.destinations.map((name, i) => {
-                const href = getDestinationHref(name);
-                return (
-                  <span key={name}>
-                    {i > 0 && ", "}
-                    {href ? (
-                      <Link href={href} className="hover:underline">
-                        {name}
-                      </Link>
-                    ) : (
-                      name
-                    )}
-                  </span>
-                );
-              })}
-            </p>
-            <Link href={`/articles/${article.slug}`} className="block group">
-              <h2 className="text-xl font-medium group-hover:underline">
-                {article.frontmatter.work}
-              </h2>
-              <p className="text-neutral-600">{article.frontmatter.description}</p>
-            </Link>
-          </li>
+          <ArticleCard key={article.slug} article={article} />
         ))}
-      </ul>
+      </div>
     </div>
   );
 }

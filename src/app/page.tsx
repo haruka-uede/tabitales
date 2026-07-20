@@ -1,5 +1,7 @@
 import Link from "next/link";
 import { getAllArticles } from "@/lib/articles";
+import { Card, CardHeader, CardTitle, CardDescription } from "@/components/ui/card";
+import ArticleCard from "@/components/ArticleCard";
 
 const EXPLORE_LINKS = [
   {
@@ -27,25 +29,25 @@ export default function Home() {
       <h1 className="text-4xl font-semibold tracking-tight max-w-xl">
         Follow Japanese novels to the real places behind them.
       </h1>
-      <p className="mt-4 text-lg text-neutral-600 max-w-xl">
+      <p className="mt-4 text-lg text-muted-foreground max-w-xl">
         Tabi Tales is a literary travel guide for readers planning a trip to Japan —
         connecting novels and their authors to the towns, temples, and train lines
         that inspired them.
       </p>
 
       <section className="mt-16">
-        <h2 className="text-sm font-semibold uppercase tracking-wide text-neutral-500 mb-6">
+        <h2 className="text-sm font-semibold uppercase tracking-wide text-muted-foreground mb-6">
           Explore
         </h2>
         <div className="grid sm:grid-cols-3 gap-6">
           {EXPLORE_LINKS.map((link) => (
-            <Link
-              key={link.href}
-              href={link.href}
-              className="border border-neutral-200 rounded-lg p-5 hover:border-neutral-400 transition-colors"
-            >
-              <h3 className="font-medium">{link.label}</h3>
-              <p className="text-sm text-neutral-600 mt-2">{link.blurb}</p>
+            <Link key={link.href} href={link.href} className="block h-full">
+              <Card className="h-full transition-shadow hover:shadow-md">
+                <CardHeader>
+                  <CardTitle>{link.label}</CardTitle>
+                  <CardDescription>{link.blurb}</CardDescription>
+                </CardHeader>
+              </Card>
             </Link>
           ))}
         </div>
@@ -53,18 +55,14 @@ export default function Home() {
 
       {articles.length > 0 && (
         <section className="mt-16">
-          <h2 className="text-sm font-semibold uppercase tracking-wide text-neutral-500 mb-6">
+          <h2 className="text-sm font-semibold uppercase tracking-wide text-muted-foreground mb-6">
             Latest guides
           </h2>
-          <ul className="space-y-4">
-            {articles.map((article) => (
-              <li key={article.slug}>
-                <Link href={`/articles/${article.slug}`} className="hover:underline">
-                  {article.frontmatter.title}
-                </Link>
-              </li>
+          <div className="grid sm:grid-cols-2 gap-6">
+            {articles.slice(0, 4).map((article) => (
+              <ArticleCard key={article.slug} article={article} />
             ))}
-          </ul>
+          </div>
         </section>
       )}
     </div>

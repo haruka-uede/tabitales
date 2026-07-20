@@ -79,7 +79,7 @@ export default async function ArticlePage({
   };
 
   return (
-    <article className="max-w-2xl mx-auto px-6 py-12 prose prose-neutral">
+    <article className="max-w-2xl mx-auto px-6 py-12 prose prose-neutral dark:prose-invert">
       <script
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: jsonLdScript(articleJsonLd) }}
@@ -88,7 +88,7 @@ export default async function ArticlePage({
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: jsonLdScript(breadcrumbJsonLd) }}
       />
-      <p className="text-sm uppercase tracking-wide text-neutral-500">
+      <p className="text-sm uppercase tracking-wide text-muted-foreground">
         {article.frontmatter.authors.map((name, i) => (
           <span key={name}>
             {i > 0 && ", "}
@@ -115,7 +115,7 @@ export default async function ArticlePage({
         })}
       </p>
       <h1>{article.frontmatter.title}</h1>
-      <p className="text-neutral-600">{article.frontmatter.description}</p>
+      <p className="text-muted-foreground">{article.frontmatter.description}</p>
 
       <MDXRemote
         source={article.content}

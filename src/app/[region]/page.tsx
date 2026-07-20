@@ -4,6 +4,7 @@ import { notFound } from "next/navigation";
 import { getArticlesByDestination } from "@/lib/articles";
 import { JAPAN_MAP, REGION_NAMES, REGION_OF_PREFECTURE } from "@/lib/japanMap";
 import { slugify } from "@/lib/slug";
+import { Badge } from "@/components/ui/badge";
 
 export function generateStaticParams() {
   return REGION_NAMES.filter((name) => getArticlesByDestination(slugify(name)).length > 0).map(
@@ -52,7 +53,7 @@ export default async function RegionPage({
   return (
     <div className="max-w-2xl mx-auto px-6 py-12">
       <p className="text-sm mb-6">
-        <Link href="/destinations" className="text-neutral-500 hover:underline">
+        <Link href="/destinations" className="text-muted-foreground hover:underline">
           ← All destinations
         </Link>
       </p>
@@ -66,30 +67,30 @@ export default async function RegionPage({
                 {prefecture.name}
               </Link>
             </h2>
-            <ul className="mt-2 space-y-1">
+            <div className="mt-3 flex flex-wrap gap-1.5">
               {prefecture.articles.map((article) => (
-                <li key={article.slug}>
-                  <Link href={`/articles/${article.slug}`} className="text-sm hover:underline">
+                <Link key={article.slug} href={`/articles/${article.slug}`}>
+                  <Badge variant="outline" className="cursor-pointer">
                     {article.frontmatter.work}
-                  </Link>
-                </li>
+                  </Badge>
+                </Link>
               ))}
-            </ul>
+            </div>
           </div>
         ))}
 
         {otherArticles.length > 0 && (
           <div>
             <h2 className="text-xl font-medium">Elsewhere in {name}</h2>
-            <ul className="mt-2 space-y-1">
+            <div className="mt-3 flex flex-wrap gap-1.5">
               {otherArticles.map((article) => (
-                <li key={article.slug}>
-                  <Link href={`/articles/${article.slug}`} className="text-sm hover:underline">
+                <Link key={article.slug} href={`/articles/${article.slug}`}>
+                  <Badge variant="outline" className="cursor-pointer">
                     {article.frontmatter.work}
-                  </Link>
-                </li>
+                  </Badge>
+                </Link>
               ))}
-            </ul>
+            </div>
           </div>
         )}
       </div>

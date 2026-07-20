@@ -40,27 +40,27 @@ export default function SearchBox({ index }: { index: SearchEntry[] }) {
         onFocus={() => setOpen(true)}
         onBlur={() => setTimeout(() => setOpen(false), 100)}
         placeholder="Search authors, works, destinations…"
-        className="w-40 sm:w-64 text-sm border border-neutral-300 rounded-md px-3 py-1.5 focus:outline-none focus:ring-1 focus:ring-neutral-400"
+        className="w-40 sm:w-64 text-sm border border-border rounded-md px-3 py-1.5 bg-background focus:outline-none focus:ring-1 focus:ring-ring"
       />
       {open && query.trim() && (
-        <div className="absolute right-0 mt-1 w-72 bg-white border border-neutral-200 rounded-md shadow-lg z-10 max-h-96 overflow-auto">
+        <div className="absolute right-0 mt-1 w-72 bg-popover text-popover-foreground border border-border rounded-md shadow-lg z-10 max-h-96 overflow-auto">
           {grouped.length === 0 ? (
-            <p className="px-3 py-3 text-sm text-neutral-500">No matches</p>
+            <p className="px-3 py-3 text-sm text-muted-foreground">No matches</p>
           ) : (
             grouped.map(({ type, entries }) => (
               <div key={type} className="py-2">
-                <p className="px-3 text-xs font-semibold uppercase tracking-wide text-neutral-400">
+                <p className="px-3 text-xs font-semibold uppercase tracking-wide text-muted-foreground">
                   {TYPE_LABELS[type]}
                 </p>
                 {entries.map((entry) => (
                   <Link
                     key={`${entry.type}-${entry.href}-${entry.label}`}
                     href={entry.href}
-                    className="block px-3 py-1.5 text-sm hover:bg-neutral-50"
+                    className="block px-3 py-1.5 text-sm hover:bg-muted"
                   >
                     {entry.label}
                     {entry.subtitle && (
-                      <span className="text-neutral-400"> — {entry.subtitle}</span>
+                      <span className="text-muted-foreground"> — {entry.subtitle}</span>
                     )}
                   </Link>
                 ))}

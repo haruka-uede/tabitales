@@ -1,10 +1,12 @@
+import Link from "next/link";
+
 export const metadata = { title: "Privacy Policy" };
 
 export default function PrivacyPolicyPage() {
   return (
-    <div className="max-w-2xl mx-auto px-6 py-12 prose prose-neutral">
+    <div className="max-w-2xl mx-auto px-6 py-12 prose prose-neutral dark:prose-invert">
       <h1>Privacy Policy</h1>
-      <p className="text-sm text-neutral-500">Effective date: July 19, 2026</p>
+      <p className="text-sm text-muted-foreground">Effective date: July 19, 2026</p>
 
       <p>
         Tabi Tales (&ldquo;we,&rdquo; &ldquo;us,&rdquo; or &ldquo;this site&rdquo;) is an
@@ -23,7 +25,7 @@ export default function PrivacyPolicyPage() {
       </p>
       <p>
         <strong>Contact form.</strong> If you use the form on our{" "}
-        <a href="/contact">Contact page</a>, we collect the name, email address, and
+        <Link href="/contact">Contact page</Link>, we collect the name, email address, and
         message you provide. It&rsquo;s sent through a third-party form service,
         Web3Forms, which relays it to us by email. We use it only to respond to your
         message.
@@ -35,7 +37,7 @@ export default function PrivacyPolicyPage() {
         earn a commission if you make a booking or purchase. We don&rsquo;t control
         those cookies or that data — see the destination site&rsquo;s own privacy
         policy for details. Full details on our affiliate relationships are on our{" "}
-        <a href="/disclosure">Affiliate Disclosure page</a>.
+        <Link href="/disclosure">Affiliate Disclosure page</Link>.
       </p>
 
       <h2>Cookies</h2>
@@ -94,7 +96,7 @@ export default function PrivacyPolicyPage() {
       <h2>Contact</h2>
       <p>
         Questions about this policy? Reach us through our{" "}
-        <a href="/contact">Contact page</a>.
+        <Link href="/contact">Contact page</Link>.
       </p>
     </div>
   );

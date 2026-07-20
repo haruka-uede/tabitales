@@ -2,8 +2,10 @@ import type { Metadata } from "next";
 import Link from "next/link";
 import { notFound } from "next/navigation";
 import { getAllAuthors } from "@/lib/articles";
-import { AUTHOR_BLURBS } from "@/lib/authorProfiles";
+import { AUTHOR_BLURBS, getAuthorInitials } from "@/lib/authorProfiles";
 import { jsonLdScript } from "@/lib/site";
+import { Avatar, AvatarFallback } from "@/components/ui/avatar";
+import ArticleCard from "@/components/ArticleCard";
 
 export function generateStaticParams() {
   return getAllAuthors().map((author) => ({ slug: author.slug }));
@@ -42,35 +44,32 @@ export default async function AuthorPage({
   };
 
   return (
-    <div className="max-w-2xl mx-auto px-6 py-12">
+    <div className="max-w-4xl mx-auto px-6 py-12">
       <script
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: jsonLdScript(personJsonLd) }}
       />
       <p className="text-sm mb-6">
-        <Link href="/authors" className="text-neutral-500 hover:underline">
+        <Link href="/authors" className="text-muted-foreground hover:underline">
           ← All authors
         </Link>
       </p>
-      <h1 className="text-3xl font-semibold mb-4">{author.name}</h1>
-      {AUTHOR_BLURBS[author.slug] && (
-        <p className="text-neutral-600 mb-10">{AUTHOR_BLURBS[author.slug]}</p>
-      )}
-      <ul className="space-y-6">
+      <div className="flex items-center gap-4 mb-10">
+        <Avatar size="lg">
+          <AvatarFallback>{getAuthorInitials(author.name)}</AvatarFallback>
+        </Avatar>
+        <div>
+          <h1 className="text-3xl font-semibold">{author.name}</h1>
+          {AUTHOR_BLURBS[author.slug] && (
+            <p className="text-muted-foreground mt-1">{AUTHOR_BLURBS[author.slug]}</p>
+          )}
+        </div>
+      </div>
+      <div className="grid sm:grid-cols-2 gap-6">
         {author.articles.map((article) => (
-          <li key={article.slug}>
-            <Link href={`/articles/${article.slug}`} className="block group">
-              <p className="text-sm uppercase tracking-wide text-neutral-500">
-                {article.frontmatter.destinations.join(", ")}
-              </p>
-              <h2 className="text-xl font-medium group-hover:underline">
-                {article.frontmatter.work}
-              </h2>
-              <p className="text-neutral-600">{article.frontmatter.description}</p>
-            </Link>
-          </li>
+          <ArticleCard key={article.slug} article={article} />
         ))}
-      </ul>
+      </div>
     </div>
   );
 }

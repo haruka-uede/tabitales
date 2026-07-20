@@ -1,7 +1,7 @@
 import type { Metadata } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
 import Link from "next/link";
-import SearchBox from "@/components/SearchBox";
+import SiteHeader from "@/components/SiteHeader";
 import CookieNotice from "@/components/CookieNotice";
 import Analytics from "@/components/Analytics";
 import { getSearchIndex } from "@/lib/search";
@@ -55,22 +55,10 @@ export default function RootLayout({
           type="application/ld+json"
           dangerouslySetInnerHTML={{ __html: jsonLdScript(organizationJsonLd) }}
         />
-        <header className="border-b border-neutral-200">
-          <div className="max-w-4xl mx-auto px-6 py-4 flex items-center justify-between gap-6">
-            <Link href="/" className="font-semibold text-lg">
-              Tabi Tales
-            </Link>
-            <nav className="text-sm flex gap-6 text-neutral-600 items-center">
-              <Link href="/articles">Guides</Link>
-              <Link href="/authors">Authors</Link>
-              <Link href="/destinations">Destinations</Link>
-              <SearchBox index={searchIndex} />
-            </nav>
-          </div>
-        </header>
+        <SiteHeader searchIndex={searchIndex} />
         <div className="flex-1">{children}</div>
-        <footer className="border-t border-neutral-200 mt-16">
-          <div className="max-w-4xl mx-auto px-6 py-8 text-sm text-neutral-500 flex justify-between">
+        <footer className="border-t border-border mt-16">
+          <div className="max-w-4xl mx-auto px-6 py-8 text-sm text-muted-foreground flex justify-between">
             <span>© {new Date().getFullYear()} Tabi Tales</span>
             <span className="flex gap-6">
               <Link href="/contact">Contact</Link>
