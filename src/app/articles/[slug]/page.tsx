@@ -8,6 +8,7 @@ import { getDestinationHref } from "@/lib/japanMap";
 import { SITE_NAME, SITE_URL, jsonLdScript } from "@/lib/site";
 import AffiliateDisclosureNote from "@/components/AffiliateDisclosureNote";
 import AuthorCorner from "@/components/AuthorCorner";
+import BookCard from "@/components/BookCard";
 import PlanYourTrip from "@/components/PlanYourTrip";
 
 export function generateStaticParams() {
@@ -118,10 +119,9 @@ export default async function ArticlePage({
       <h1>{article.frontmatter.title}</h1>
       <p className="text-muted-foreground">{article.frontmatter.description}</p>
 
-      <MDXRemote
-        source={article.content}
-        components={{ AffiliateDisclosureNote }}
-      />
+      <BookCard work={article.frontmatter.work} authors={article.frontmatter.authors} />
+
+      <MDXRemote source={article.content} components={{ AffiliateDisclosureNote }} />
 
       {article.frontmatter.authors.map((name) => (
         <AuthorCorner key={name} name={name} excludeSlug={article.slug} />
