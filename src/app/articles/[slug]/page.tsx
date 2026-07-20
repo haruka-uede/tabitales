@@ -7,6 +7,7 @@ import { slugify } from "@/lib/slug";
 import { getDestinationHref } from "@/lib/japanMap";
 import { SITE_NAME, SITE_URL, jsonLdScript } from "@/lib/site";
 import AffiliateDisclosureNote from "@/components/AffiliateDisclosureNote";
+import AuthorCorner from "@/components/AuthorCorner";
 import PlanYourTrip from "@/components/PlanYourTrip";
 
 export function generateStaticParams() {
@@ -121,6 +122,10 @@ export default async function ArticlePage({
         source={article.content}
         components={{ AffiliateDisclosureNote }}
       />
+
+      {article.frontmatter.authors.map((name) => (
+        <AuthorCorner key={name} name={name} excludeSlug={article.slug} />
+      ))}
 
       <PlanYourTrip
         work={article.frontmatter.work}

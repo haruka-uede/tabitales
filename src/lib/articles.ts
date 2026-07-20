@@ -83,3 +83,19 @@ export function getArticlesByAuthor(slug: string): Article[] {
 export function getArticlesByDestination(slug: string): Article[] {
   return getAllDestinations().find((d) => d.slug === slug)?.articles ?? [];
 }
+
+// Capped and de-duplicated in article order, not alphabetically - keeps the
+// list stable/predictable as an author's article count grows.
+export function getAuthorDestinations(slug: string, limit = 5): string[] {
+  const seen = new Set<string>();
+  const result: string[] = [];
+  for (const article of getArticlesByAuthor(slug)) {
+    for (const name of article.frontmatter.destinations) {
+      if (seen.has(name)) continue;
+      seen.add(name);
+      result.push(name);
+      if (result.length >= limit) return result;
+    }
+  }
+  return result;
+}

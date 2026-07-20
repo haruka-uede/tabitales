@@ -1,11 +1,12 @@
 import type { Metadata } from "next";
 import Link from "next/link";
 import { notFound } from "next/navigation";
-import { getAllAuthors } from "@/lib/articles";
-import { AUTHOR_BLURBS, getAuthorInitials } from "@/lib/authorProfiles";
+import { getAllAuthors, getAuthorDestinations } from "@/lib/articles";
+import { AUTHOR_BLURBS } from "@/lib/authorProfiles";
 import { jsonLdScript } from "@/lib/site";
-import { Avatar, AvatarFallback } from "@/components/ui/avatar";
+import { getDestinationHref } from "@/lib/japanMap";
 import ArticleCard from "@/components/ArticleCard";
+import { Badge } from "@/components/ui/badge";
 
 export function generateStaticParams() {
   return getAllAuthors().map((author) => ({ slug: author.slug }));
@@ -54,16 +55,29 @@ export default async function AuthorPage({
           ← All authors
         </Link>
       </p>
-      <div className="flex items-center gap-4 mb-10">
-        <Avatar size="lg">
-          <AvatarFallback>{getAuthorInitials(author.name)}</AvatarFallback>
-        </Avatar>
-        <div>
-          <h1 className="text-3xl font-semibold">{author.name}</h1>
-          {AUTHOR_BLURBS[author.slug] && (
-            <p className="text-muted-foreground mt-1">{AUTHOR_BLURBS[author.slug]}</p>
-          )}
-        </div>
+      <div className="mb-10">
+        <h1 className="text-3xl font-semibold">{author.name}</h1>
+        {AUTHOR_BLURBS[author.slug] && (
+          <p className="text-muted-foreground mt-1">{AUTHOR_BLURBS[author.slug]}</p>
+        )}
+        {getAuthorDestinations(author.slug).length > 0 && (
+          <div className="flex flex-wrap gap-1.5 mt-4">
+            {getAuthorDestinations(author.slug).map((destination) => {
+              const href = getDestinationHref(destination);
+              return href ? (
+                <Link key={destination} href={href}>
+                  <Badge variant="secondary" className="cursor-pointer">
+                    {destination}
+                  </Badge>
+                </Link>
+              ) : (
+                <Badge key={destination} variant="outline">
+                  {destination}
+                </Badge>
+              );
+            })}
+          </div>
+        )}
       </div>
       <div className="grid sm:grid-cols-2 gap-6">
         {author.articles.map((article) => (

@@ -1,10 +1,5 @@
 import { slugify } from "./slug";
 
-export function getAuthorInitials(name: string): string {
-  const words = name.split(" ").filter(Boolean);
-  return ((words[0]?.[0] ?? "") + (words[words.length - 1]?.[0] ?? "")).toUpperCase();
-}
-
 export const AUTHOR_BLURBS: Record<string, string> = {
   [slugify("Haruki Murakami")]:
     "One of the most internationally recognized Japanese novelists. His Tokyo — jazz bars, quiet cafés, city walks — is a recurring backdrop across his fiction.",
@@ -14,4 +9,6 @@ export const AUTHOR_BLURBS: Record<string, string> = {
     "A contemporary mystery writer whose novels — several adapted into hit films and shows — are tied to real, specific settings across Japan.",
   [slugify("Natsume Soseki")]:
     "Widely considered the most important novelist of modern Japan. His novels map onto real places he lived and taught — from a Shikoku bathhouse to a Tokyo cemetery where he's actually buried.",
+  [slugify("Junichiro Tanizaki")]:
+    "Tanizaki lived out much of what he wrote in Naomi: in the early 1920s he moved to Yokohama's Westernized Yamate district and took up the same ballroom dancing and fashion he later gave his characters, before the 1923 Great Kanto Earthquake forced him to relocate to the Kansai region.",
 };

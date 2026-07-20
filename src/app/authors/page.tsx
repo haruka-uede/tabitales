@@ -1,8 +1,8 @@
 import Link from "next/link";
-import { getAllAuthors } from "@/lib/articles";
-import { AUTHOR_BLURBS, getAuthorInitials } from "@/lib/authorProfiles";
+import { getAllAuthors, getAuthorDestinations } from "@/lib/articles";
+import { AUTHOR_BLURBS } from "@/lib/authorProfiles";
+import { getDestinationHref } from "@/lib/japanMap";
 import { Card, CardHeader, CardTitle, CardDescription, CardContent } from "@/components/ui/card";
-import { Avatar, AvatarFallback } from "@/components/ui/avatar";
 import { Badge } from "@/components/ui/badge";
 
 export const metadata = { title: "Authors" };
@@ -21,22 +21,17 @@ export default function AuthorsPage() {
       <div className="grid sm:grid-cols-2 gap-6">
         {authors.map((author) => (
           <Card key={author.slug} id={author.slug}>
-            <CardHeader className="flex-row items-center gap-3 space-y-0">
-              <Avatar size="lg">
-                <AvatarFallback>{getAuthorInitials(author.name)}</AvatarFallback>
-              </Avatar>
-              <div>
-                <CardTitle>
-                  <Link href={`/authors/${author.slug}`} className="hover:underline">
-                    {author.name}
-                  </Link>
-                </CardTitle>
-                {AUTHOR_BLURBS[author.slug] && (
-                  <CardDescription className="mt-1">{AUTHOR_BLURBS[author.slug]}</CardDescription>
-                )}
-              </div>
+            <CardHeader>
+              <CardTitle>
+                <Link href={`/authors/${author.slug}`} className="hover:underline">
+                  {author.name}
+                </Link>
+              </CardTitle>
+              {AUTHOR_BLURBS[author.slug] && (
+                <CardDescription>{AUTHOR_BLURBS[author.slug]}</CardDescription>
+              )}
             </CardHeader>
-            <CardContent>
+            <CardContent className="space-y-4">
               <div className="flex flex-wrap gap-1.5">
                 {author.articles.map((article) => (
                   <Link key={article.slug} href={`/articles/${article.slug}`}>
@@ -46,6 +41,29 @@ export default function AuthorsPage() {
                   </Link>
                 ))}
               </div>
+              {getAuthorDestinations(author.slug).length > 0 && (
+                <div>
+                  <p className="text-xs font-medium text-muted-foreground mb-1.5">
+                    Places connected to {author.name}
+                  </p>
+                  <div className="flex flex-wrap gap-1.5">
+                    {getAuthorDestinations(author.slug).map((destination) => {
+                      const href = getDestinationHref(destination);
+                      return href ? (
+                        <Link key={destination} href={href}>
+                          <Badge variant="secondary" className="cursor-pointer">
+                            {destination}
+                          </Badge>
+                        </Link>
+                      ) : (
+                        <Badge key={destination} variant="outline">
+                          {destination}
+                        </Badge>
+                      );
+                    })}
+                  </div>
+                </div>
+              )}
             </CardContent>
           </Card>
         ))}
