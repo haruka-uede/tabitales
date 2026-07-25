@@ -18,6 +18,7 @@ import {
 } from "@/components/ui/sheet";
 import { Button } from "@/components/ui/button";
 import SearchBox from "@/components/SearchBox";
+import LanguageSwitcher from "@/components/LanguageSwitcher";
 import type { SearchEntry } from "@/lib/search";
 import { dictionary, href, type Locale } from "@/lib/i18n";
 
@@ -42,7 +43,7 @@ export default function SiteHeader({
   const showSearch = locale === "en" && searchIndex;
 
   return (
-    <header className="border-b border-border">
+    <header className="sticky top-0 z-30 bg-background border-b border-border">
       <div className="max-w-4xl mx-auto px-6 py-4 flex items-center justify-between gap-6">
         <Link href={href(locale, "/")} className="font-semibold text-lg">
           Tabi Tales
@@ -61,10 +62,12 @@ export default function SiteHeader({
             </NavigationMenuList>
           </NavigationMenu>
           {showSearch && <SearchBox index={searchIndex} />}
+          <LanguageSwitcher locale={locale} />
         </div>
 
         <div className="flex sm:hidden items-center gap-2">
           {showSearch && <SearchBox index={searchIndex} />}
+          <LanguageSwitcher locale={locale} />
           <Sheet>
             <SheetTrigger
               render={<Button variant="ghost" size="icon" aria-label={menu.open} />}

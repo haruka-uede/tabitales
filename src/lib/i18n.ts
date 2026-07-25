@@ -6,6 +6,7 @@ export const dictionary = {
   en: {
     nav: { guides: "Guides", authors: "Authors", destinations: "Destinations" },
     menu: { open: "Open menu", title: "Menu" },
+    language: { switch: "Switch language" },
     cookieNotice: {
       message: "This site uses cookies for analytics and affiliate link tracking. See our",
       privacyPolicy: "Privacy Policy",
@@ -22,6 +23,7 @@ export const dictionary = {
   ja: {
     nav: { guides: "文学ガイド", authors: "著者", destinations: "行き先" },
     menu: { open: "メニューを開く", title: "メニュー" },
+    language: { switch: "言語を切り替える" },
     cookieNotice: {
       message: "本サイトはアクセス解析およびアフィリエイトリンクの計測にクッキーを使用しています。詳細は",
       privacyPolicy: "プライバシーポリシー",
