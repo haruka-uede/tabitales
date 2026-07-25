@@ -3,6 +3,8 @@ import { slugify } from "./slug";
 
 export type Locale = "en" | "ja";
 
+export type ArticleStatus = "draft" | "needs_revision" | "published" | "retired";
+
 export type ArticleFrontmatter = {
   title: string;
   description: string;
@@ -11,7 +13,7 @@ export type ArticleFrontmatter = {
   destinations: string[];
   homeBase?: string;
   publishedAt: string;
-  draft?: boolean;
+  status: ArticleStatus;
 };
 
 export type Article = {
@@ -31,23 +33,23 @@ export type Facet = {
 // build time (via the Zod schema in content-collections.ts), so a malformed
 // or missing field fails the build instead of shipping a broken page.
 function toArticle(doc: (typeof allArticles)[number]): Article {
-  const { title, description, work, authors, destinations, homeBase, publishedAt, draft, content } = doc;
+  const { title, description, work, authors, destinations, homeBase, publishedAt, status, content } = doc;
   return {
     slug: doc.slug,
     locale: doc.locale,
-    frontmatter: { title, description, work, authors, destinations, homeBase, publishedAt, draft },
+    frontmatter: { title, description, work, authors, destinations, homeBase, publishedAt, status },
     content,
   };
 }
 
 export function getAllArticles({
   locale = "en" as Locale,
-  includeDrafts = false,
+  includeUnpublished = false,
 } = {}): Article[] {
   return allArticles
     .filter((doc) => doc.locale === locale)
     .map(toArticle)
-    .filter((article) => includeDrafts || !article.frontmatter.draft)
+    .filter((article) => includeUnpublished || article.frontmatter.status === "published")
     .sort((a, b) => (a.frontmatter.publishedAt < b.frontmatter.publishedAt ? 1 : -1));
 }
 
@@ -77,12 +79,12 @@ function groupByFacet(
   return [...facets.values()].sort((a, b) => a.name.localeCompare(b.name));
 }
 
-export function getAllAuthors({ locale = "en" as Locale, includeDrafts = false } = {}): Facet[] {
-  return groupByFacet(getAllArticles({ locale, includeDrafts }), (a) => a.frontmatter.authors);
+export function getAllAuthors({ locale = "en" as Locale, includeUnpublished = false } = {}): Facet[] {
+  return groupByFacet(getAllArticles({ locale, includeUnpublished }), (a) => a.frontmatter.authors);
 }
 
-export function getAllDestinations({ locale = "en" as Locale, includeDrafts = false } = {}): Facet[] {
-  return groupByFacet(getAllArticles({ locale, includeDrafts }), (a) => a.frontmatter.destinations);
+export function getAllDestinations({ locale = "en" as Locale, includeUnpublished = false } = {}): Facet[] {
+  return groupByFacet(getAllArticles({ locale, includeUnpublished }), (a) => a.frontmatter.destinations);
 }
 
 export function getArticlesByAuthor(slug: string, locale: Locale = "en"): Article[] {

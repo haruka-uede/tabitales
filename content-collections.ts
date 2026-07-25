@@ -13,7 +13,7 @@ const articles = defineCollection({
     destinations: z.array(z.string()),
     homeBase: z.string().optional(),
     publishedAt: z.string(),
-    draft: z.boolean().optional(),
+    status: z.enum(["draft", "needs_revision", "published", "retired"]),
     content: z.string(),
   }),
   // Locale and slug come from where the file lives (content/articles/<locale>/<slug>.mdx),

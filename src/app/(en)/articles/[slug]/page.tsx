@@ -15,7 +15,7 @@ export function generateStaticParams() {
   return getAllArticles().map((article) => ({ slug: article.slug }));
 }
 
-// Only slugs returned by generateStaticParams (i.e. non-draft) are servable.
+// Only slugs returned by generateStaticParams (i.e. status: "published") are servable.
 export const dynamicParams = false;
 
 export async function generateMetadata({
