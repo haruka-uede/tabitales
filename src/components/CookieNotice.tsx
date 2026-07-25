@@ -4,8 +4,10 @@ import { useEffect, useState } from "react";
 import Link from "next/link";
 import { getStoredConsent, setStoredConsent } from "@/lib/consent";
 import { Button } from "@/components/ui/button";
+import { dictionary, href, type Locale } from "@/lib/i18n";
 
-export default function CookieNotice() {
+export default function CookieNotice({ locale = "en" as Locale }: { locale?: Locale }) {
+  const t = dictionary[locale].cookieNotice;
   const [visible, setVisible] = useState(false);
 
   useEffect(() => {
@@ -25,17 +27,17 @@ export default function CookieNotice() {
     <div className="fixed bottom-0 inset-x-0 border-t border-border bg-background z-20">
       <div className="max-w-4xl mx-auto px-6 py-4 flex flex-wrap items-center gap-4 text-sm text-muted-foreground">
         <p className="flex-1">
-          This site uses cookies for analytics and affiliate link tracking. See our{" "}
-          <Link href="/privacy-policy" className="underline">
-            Privacy Policy
+          {t.message}{" "}
+          <Link href={href(locale, "/privacy-policy")} className="underline">
+            {t.privacyPolicy}
           </Link>{" "}
-          for details.
+          {t.messageSuffix}
         </p>
         <div className="flex gap-3 shrink-0">
           <Button variant="ghost" onClick={() => choose("declined")}>
-            Decline
+            {t.decline}
           </Button>
-          <Button onClick={() => choose("accepted")}>Accept</Button>
+          <Button onClick={() => choose("accepted")}>{t.accept}</Button>
         </div>
       </div>
     </div>

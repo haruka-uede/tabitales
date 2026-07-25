@@ -1,20 +1,28 @@
 // Set these once, when each affiliate program is approved. Nothing else
 // needs to change per-article - PlanYourTrip.tsx reads these plus each
-// article's own frontmatter (work/authors/destinations) automatically.
+// article's own frontmatter (work/authors/destinations/homeBase) automatically.
 const AMAZON_TAG = "";
 const BOOKING_AID = "";
-const VIATOR_CAMPAIGN_ID = "";
 
 type DestinationLinkIds = {
   bookingDestId?: string;
-  viatorDestId?: string;
 };
 
-// Verified deep-link IDs for specific destinations, from each program's own
-// link-builder tool. Add an entry here once per *destination* (not per
-// article) to upgrade that destination's links from generic search pages
-// to a pre-filtered city page. Missing entries fall back to a generic link.
+// Verified deep-link IDs for specific destinations, from Booking's own
+// link-builder tool. Add an entry here once per *region* (not per article)
+// to upgrade that region's links from generic search pages to a
+// pre-filtered city page. This is the coarse fallback tier - see
+// HOME_BASE_LINK_IDS below for the more precise tier. Missing entries fall
+// back to a generic link.
 const DESTINATION_LINK_IDS: Record<string, DestinationLinkIds> = {};
+
+// Same idea as DESTINATION_LINK_IDS, but keyed by an article's specific
+// practical base city (frontmatter `homeBase`, e.g. "Naha") rather than its
+// broad region (frontmatter `destinations`, e.g. "Okinawa"). This is the
+// precise tier: it's what lets the hotel link point at the city a reader
+// would actually book in, instead of an entire region. Populate once per
+// city, same manual process as DESTINATION_LINK_IDS.
+const HOME_BASE_LINK_IDS: Record<string, DestinationLinkIds> = {};
 
 export function getBookAffiliateLink(work: string, authors: string[]): string | null {
   if (!AMAZON_TAG) return null;
@@ -22,22 +30,28 @@ export function getBookAffiliateLink(work: string, authors: string[]): string | 
   return `https://www.amazon.com/s?k=${query}&tag=${AMAZON_TAG}`;
 }
 
-export function getHotelAffiliateLink(destinations: string[]): string | null {
+export function getHotelAffiliateLink(destinations: string[], homeBase?: string): string | null {
   if (!BOOKING_AID) return null;
-  const destId = findDestinationLinkId(destinations, "bookingDestId");
+  const destId =
+    (homeBase && HOME_BASE_LINK_IDS[homeBase]?.bookingDestId) ??
+    findDestinationLinkId(destinations, "bookingDestId");
   if (destId) {
     return `https://www.booking.com/searchresults.html?aid=${BOOKING_AID}&dest_type=city&dest_id=${destId}`;
   }
   return `https://www.booking.com/index.html?aid=${BOOKING_AID}`;
 }
 
-// Viator's affiliate links are generated through their own partner tooling
-// (currently via impact.com) rather than a plain, guessable URL format.
-// Leave this returning null until we're approved and can confirm the real
-// link structure from their dashboard - a guessed URL risks not tracking
-// at all, which is worse than showing no tour link yet.
-export function getTourAffiliateLink(_destinations: string[]): string | null {
-  if (!VIATOR_CAMPAIGN_ID) return null;
+// Booking.com also pays commission on "Attractions" (tours/tickets/experiences),
+// so this replaces what used to be a separate Viator integration - one
+// program instead of two, same BOOKING_AID once approved. The real
+// Attractions search URL/param format hasn't been confirmed yet against
+// Booking's own Partner Hub Link Creator, so this intentionally returns null
+// rather than guessing - an unverified URL risks not tracking at all, which
+// is worse than showing no attractions link.
+export function getAttractionsAffiliateLink(
+  _destinations: string[],
+  _homeBase?: string
+): string | null {
   return null;
 }
 

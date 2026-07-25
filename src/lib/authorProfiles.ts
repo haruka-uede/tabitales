@@ -12,3 +12,18 @@ export const AUTHOR_BLURBS: Record<string, string> = {
   [slugify("Junichiro Tanizaki")]:
     "Tanizaki lived out much of what he wrote in Naomi: in the early 1920s he moved to Yokohama's Westernized Yamate district and took up the same ballroom dancing and fashion he later gave his characters, before the 1923 Great Kanto Earthquake forced him to relocate to the Kansai region.",
 };
+
+// Display-only Japanese names for JA pages. The canonical `authors`
+// frontmatter field (used for slugs and Booking.com lookups) stays
+// romanized/untranslated on purpose - see .claude/commands/translate-article.md
+// and src/lib/slug.ts. This dictionary is purely cosmetic: it swaps the
+// byline text a JA reader sees, without touching any identity field. Falls
+// back to the romanized name if an author isn't in here yet.
+export const AUTHOR_NAMES_JA: Record<string, string> = {
+  [slugify("Osamu Dazai")]: "太宰治",
+  [slugify("Tatsuhiro Oshiro")]: "大城立裕",
+  [slugify("Haruki Murakami")]: "村上春樹",
+  [slugify("Junichiro Tanizaki")]: "谷崎潤一郎",
+  [slugify("Natsume Soseki")]: "夏目漱石",
+  [slugify("Masuji Ibuse")]: "井伏鱒二",
+};

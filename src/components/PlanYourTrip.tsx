@@ -1,7 +1,7 @@
 import {
+  getAttractionsAffiliateLink,
   getBookAffiliateLink,
   getHotelAffiliateLink,
-  getTourAffiliateLink,
 } from "@/lib/affiliate";
 import { Button } from "@/components/ui/button";
 import { Separator } from "@/components/ui/separator";
@@ -10,15 +10,20 @@ export default function PlanYourTrip({
   work,
   authors,
   destinations,
+  homeBase,
 }: {
   work: string;
   authors: string[];
   destinations: string[];
+  homeBase?: string;
 }) {
   const links = [
     { href: getBookAffiliateLink(work, authors), label: `Get the book: ${work}` },
-    { href: getHotelAffiliateLink(destinations), label: "Search hotels" },
-    { href: getTourAffiliateLink(destinations), label: "Find tours & experiences" },
+    { href: getHotelAffiliateLink(destinations, homeBase), label: "Search hotels" },
+    {
+      href: getAttractionsAffiliateLink(destinations, homeBase),
+      label: "Find tours & experiences",
+    },
   ].filter((link): link is { href: string; label: string } => !!link.href);
 
   if (links.length === 0) return null;
