@@ -1,6 +1,6 @@
 import Link from "next/link";
 import { getAllAuthors, getAuthorDestinations } from "@/lib/articles";
-import { AUTHOR_BLURBS } from "@/lib/authorProfiles";
+import { AUTHOR_PROFILES } from "@/lib/authorProfiles";
 import { getDestinationHref } from "@/lib/japanMap";
 import { Card, CardHeader, CardTitle, CardDescription, CardContent } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
@@ -27,8 +27,8 @@ export default function AuthorsPage() {
                   {author.name}
                 </Link>
               </CardTitle>
-              {AUTHOR_BLURBS[author.slug] && (
-                <CardDescription>{AUTHOR_BLURBS[author.slug]}</CardDescription>
+              {AUTHOR_PROFILES[author.slug]?.blurb && (
+                <CardDescription>{AUTHOR_PROFILES[author.slug].blurb}</CardDescription>
               )}
             </CardHeader>
             <CardContent className="space-y-4">

@@ -1,53 +1,75 @@
 import Link from "next/link";
 import { getArticlesByAuthor, getAuthorDestinations } from "@/lib/articles";
-import { AUTHOR_BLURBS } from "@/lib/authorProfiles";
-import { getDestinationHref } from "@/lib/japanMap";
+import { AUTHOR_PROFILES, getAuthorNameJa } from "@/lib/authorProfiles";
+import { getDestinationHref, getPlaceNameJa } from "@/lib/japanMap";
+import { getWorkNameJa } from "@/lib/workProfiles";
+import { href as localeHref, type Locale } from "@/lib/i18n";
 import { slugify } from "@/lib/slug";
 import { Card, CardContent, CardHeader, CardTitle, CardDescription } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 
+const COPY = {
+  en: {
+    aboutTheAuthor: "About the author",
+    places: (name: string) => `Places connected to ${name}`,
+    moreGuides: (name: string) => `More guides by ${name}`,
+  },
+  ja: {
+    aboutTheAuthor: "著者について",
+    places: (name: string) => `${name}にゆかりの地`,
+    moreGuides: (name: string) => `${name}のその他のガイド`,
+  },
+} satisfies Record<Locale, unknown>;
+
 export default function AuthorCorner({
   name,
   excludeSlug,
+  locale = "en" as Locale,
 }: {
   name: string;
   excludeSlug?: string;
+  locale?: Locale;
 }) {
   const slug = slugify(name);
-  const blurb = AUTHOR_BLURBS[slug];
-  const destinations = getAuthorDestinations(slug);
-  const otherArticles = getArticlesByAuthor(slug).filter((a) => a.slug !== excludeSlug);
+  const displayName = locale === "ja" ? getAuthorNameJa(slug, name) : name;
+  const blurb = AUTHOR_PROFILES[slug]?.blurb;
+  const destinations = getAuthorDestinations(slug, locale);
+  const otherArticles = getArticlesByAuthor(slug, locale).filter((a) => a.slug !== excludeSlug);
+  const t = COPY[locale];
 
   return (
     <Card className="mt-8 not-prose">
       <CardHeader>
-        <p className="text-xs uppercase tracking-wide text-muted-foreground">About the author</p>
+        <p className="text-xs uppercase tracking-wide text-muted-foreground">
+          {t.aboutTheAuthor}
+        </p>
         <CardTitle>
-          <Link href={`/authors/${slug}`} className="hover:underline">
-            {name}
+          <Link href={localeHref(locale, `/authors/${slug}`)} className="hover:underline">
+            {displayName}
           </Link>
         </CardTitle>
-        {blurb && <CardDescription>{blurb}</CardDescription>}
+        {blurb && locale === "en" && <CardDescription>{blurb}</CardDescription>}
       </CardHeader>
       {(destinations.length > 0 || otherArticles.length > 0) && (
         <CardContent className="space-y-4">
           {destinations.length > 0 && (
             <div>
               <p className="text-xs font-medium text-muted-foreground mb-1.5">
-                Places connected to {name}
+                {t.places(displayName)}
               </p>
               <div className="flex flex-wrap gap-1.5">
                 {destinations.map((destination) => {
-                  const href = getDestinationHref(destination);
-                  return href ? (
-                    <Link key={destination} href={href}>
+                  const destHref = getDestinationHref(destination, locale);
+                  const label = locale === "ja" ? getPlaceNameJa(destination) : destination;
+                  return destHref ? (
+                    <Link key={destination} href={destHref}>
                       <Badge variant="secondary" className="cursor-pointer">
-                        {destination}
+                        {label}
                       </Badge>
                     </Link>
                   ) : (
                     <Badge key={destination} variant="outline">
-                      {destination}
+                      {label}
                     </Badge>
                   );
                 })}
@@ -57,13 +79,18 @@ export default function AuthorCorner({
           {otherArticles.length > 0 && (
             <div>
               <p className="text-xs font-medium text-muted-foreground mb-1.5">
-                More guides by {name}
+                {t.moreGuides(displayName)}
               </p>
               <div className="flex flex-wrap gap-1.5">
                 {otherArticles.map((article) => (
-                  <Link key={article.slug} href={`/articles/${article.slug}`}>
+                  <Link
+                    key={article.slug}
+                    href={localeHref(locale, `/articles/${article.slug}`)}
+                  >
                     <Badge variant="outline" className="cursor-pointer">
-                      {article.frontmatter.work}
+                      {locale === "ja"
+                        ? getWorkNameJa(article.frontmatter.work)
+                        : article.frontmatter.work}
                     </Badge>
                   </Link>
                 ))}

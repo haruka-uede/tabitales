@@ -1,20 +1,24 @@
 import type { Metadata } from "next";
+import Link from "next/link";
 import { notFound } from "next/navigation";
 import { MDXRemote } from "next-mdx-remote/rsc";
 import { getAllArticles, getArticleBySlug } from "@/lib/articles";
-import { AUTHOR_NAMES_JA } from "@/lib/authorProfiles";
+import { getAuthorNameJa } from "@/lib/authorProfiles";
+import { getDestinationHref, getPlaceNameJa } from "@/lib/japanMap";
 import { slugify } from "@/lib/slug";
 import { SITE_NAME, SITE_URL, jsonLdScript } from "@/lib/site";
 import AffiliateDisclosureNoteJa from "@/components/AffiliateDisclosureNoteJa";
 import AffiliateDisclosureBannerJa from "@/components/AffiliateDisclosureBannerJa";
-import BookCard from "@/components/BookCard";
+import AuthorCorner from "@/components/AuthorCorner";
+import BookCardJa from "@/components/BookCardJa";
+import MapLinkJa from "@/components/MapLinkJa";
 import PlanYourTrip from "@/components/PlanYourTrip";
 
 export function generateStaticParams() {
   return getAllArticles({ locale: "ja" }).map((article) => ({ slug: article.slug }));
 }
 
-// Only slugs returned by generateStaticParams (i.e. non-draft JA translations) are servable.
+// Only slugs returned by generateStaticParams (i.e. status: "published" JA translations) are servable.
 export const dynamicParams = false;
 
 export async function generateMetadata({
@@ -98,15 +102,34 @@ export default async function JaArticlePage({
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: jsonLdScript(breadcrumbJsonLd) }}
       />
-      {/* /authors and /ja/authors don't exist yet, so author names render as
-          plain text here rather than links - see plan note on not linking a
-          JA reader into an English-only (or nonexistent) facet page. */}
       <p className="text-sm uppercase tracking-wide text-muted-foreground">
-        {article.frontmatter.authors
-          .map((name) => AUTHOR_NAMES_JA[slugify(name)] ?? name)
-          .join("、")}
+        {article.frontmatter.authors.map((name, i) => {
+          const authorSlug = slugify(name);
+          return (
+            <span key={name}>
+              {i > 0 && "、"}
+              <Link href={`/ja/authors/${authorSlug}`} className="underline">
+                {getAuthorNameJa(authorSlug, name)}
+              </Link>
+            </span>
+          );
+        })}
         {" ・ "}
-        {article.frontmatter.destinations.join("、")}
+        {article.frontmatter.destinations.map((name, i) => {
+          const destHref = getDestinationHref(name, "ja");
+          return (
+            <span key={name}>
+              {i > 0 && "、"}
+              {destHref ? (
+                <Link href={destHref} className="underline">
+                  {getPlaceNameJa(name)}
+                </Link>
+              ) : (
+                getPlaceNameJa(name)
+              )}
+            </span>
+          );
+        })}
       </p>
       <h1>{article.frontmatter.title}</h1>
 
@@ -114,12 +137,16 @@ export default async function JaArticlePage({
 
       <p className="text-muted-foreground">{article.frontmatter.description}</p>
 
-      <BookCard work={article.frontmatter.work} authors={article.frontmatter.authors} />
+      <BookCardJa work={article.frontmatter.work} authors={article.frontmatter.authors} />
 
       <MDXRemote
         source={article.content}
-        components={{ AffiliateDisclosureNote: AffiliateDisclosureNoteJa }}
+        components={{ AffiliateDisclosureNote: AffiliateDisclosureNoteJa, MapLink: MapLinkJa }}
       />
+
+      {article.frontmatter.authors.map((name) => (
+        <AuthorCorner key={name} name={name} excludeSlug={article.slug} locale="ja" />
+      ))}
 
       <PlanYourTrip
         work={article.frontmatter.work}

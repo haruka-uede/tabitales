@@ -10,12 +10,17 @@ export type BookInfo = {
 // free 10,000/day Google Books quota at this article count. Missing key or
 // no match both resolve to null so the card just doesn't render, same
 // graceful-degradation pattern as the affiliate links in affiliate.ts.
-export async function fetchBookInfo(work: string, authors: string[]): Promise<BookInfo | null> {
+export async function fetchBookInfo(
+  work: string,
+  authors: string[],
+  options?: { langRestrict?: string }
+): Promise<BookInfo | null> {
   const apiKey = process.env.GOOGLE_BOOKS_API_KEY;
   if (!apiKey) return null;
 
   const query = encodeURIComponent(`intitle:${work} inauthor:${authors[0] ?? ""}`);
-  const url = `https://www.googleapis.com/books/v1/volumes?q=${query}&maxResults=1&key=${apiKey}`;
+  const langParam = options?.langRestrict ? `&langRestrict=${options.langRestrict}` : "";
+  const url = `https://www.googleapis.com/books/v1/volumes?q=${query}&maxResults=1${langParam}&key=${apiKey}`;
 
   try {
     const res = await fetch(url);

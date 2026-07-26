@@ -9,6 +9,7 @@ import { SITE_NAME, SITE_URL, jsonLdScript } from "@/lib/site";
 import AffiliateDisclosureNote from "@/components/AffiliateDisclosureNote";
 import AuthorCorner from "@/components/AuthorCorner";
 import BookCard from "@/components/BookCard";
+import MapLink from "@/components/MapLink";
 import PlanYourTrip from "@/components/PlanYourTrip";
 
 export function generateStaticParams() {
@@ -130,7 +131,7 @@ export default async function ArticlePage({
 
       <BookCard work={article.frontmatter.work} authors={article.frontmatter.authors} />
 
-      <MDXRemote source={article.content} components={{ AffiliateDisclosureNote }} />
+      <MDXRemote source={article.content} components={{ AffiliateDisclosureNote, MapLink }} />
 
       {article.frontmatter.authors.map((name) => (
         <AuthorCorner key={name} name={name} excludeSlug={article.slug} />

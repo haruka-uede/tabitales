@@ -2,7 +2,7 @@ import type { Metadata } from "next";
 import Link from "next/link";
 import { notFound } from "next/navigation";
 import { getAllAuthors, getAuthorDestinations } from "@/lib/articles";
-import { AUTHOR_BLURBS } from "@/lib/authorProfiles";
+import { AUTHOR_PROFILES } from "@/lib/authorProfiles";
 import { jsonLdScript } from "@/lib/site";
 import { getDestinationHref } from "@/lib/japanMap";
 import ArticleCard from "@/components/ArticleCard";
@@ -57,8 +57,8 @@ export default async function AuthorPage({
       </p>
       <div className="mb-10">
         <h1 className="text-3xl font-semibold">{author.name}</h1>
-        {AUTHOR_BLURBS[author.slug] && (
-          <p className="text-muted-foreground mt-1">{AUTHOR_BLURBS[author.slug]}</p>
+        {AUTHOR_PROFILES[author.slug]?.blurb && (
+          <p className="text-muted-foreground mt-1">{AUTHOR_PROFILES[author.slug].blurb}</p>
         )}
         {getAuthorDestinations(author.slug).length > 0 && (
           <div className="flex flex-wrap gap-1.5 mt-4">
