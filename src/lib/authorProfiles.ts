@@ -7,6 +7,12 @@ export type AuthorProfile = {
   // and src/lib/slug.ts. Falls back to the romanized name if unset.
   nameJa?: string;
   blurb?: string;
+  // JA equivalent of blurb, not a translation pulled at render time - filled
+  // in as needed, same incremental pattern as nameJa. Only shown on JA pages
+  // (blurb itself stays EN-only); no fallback, since showing the EN blurb on
+  // a JA page reintroduces the exact "written for foreigners" tone problem
+  // .claude/commands/translate-article.md's tone pass exists to avoid.
+  blurbJa?: string;
 };
 
 export const AUTHOR_PROFILES: Record<string, AuthorProfile> = {
@@ -19,6 +25,8 @@ export const AUTHOR_PROFILES: Record<string, AuthorProfile> = {
     nameJa: "太宰治",
     blurb:
       "Dazai's memoir Tsugaru retraces his rural hometown in northern Japan, from his family's preserved mansion in Kanagi to the remote coastal village of Kodomari.",
+    blurbJa:
+      "紀行文『津軽』では、生家のある金木から、幼い頃の太宰を育てた「たけ」と再会した小泊まで、青森県北部の故郷を辿る旅の道のりが描かれている。",
   },
   [slugify("Keigo Higashino")]: {
     blurb:

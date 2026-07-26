@@ -32,7 +32,7 @@ export default function AuthorCorner({
 }) {
   const slug = slugify(name);
   const displayName = locale === "ja" ? getAuthorNameJa(slug, name) : name;
-  const blurb = AUTHOR_PROFILES[slug]?.blurb;
+  const blurb = locale === "ja" ? AUTHOR_PROFILES[slug]?.blurbJa : AUTHOR_PROFILES[slug]?.blurb;
   const destinations = getAuthorDestinations(slug, locale);
   const otherArticles = getArticlesByAuthor(slug, locale).filter((a) => a.slug !== excludeSlug);
   const t = COPY[locale];
@@ -44,15 +44,11 @@ export default function AuthorCorner({
           {t.aboutTheAuthor}
         </p>
         <CardTitle>
-          {locale === "en" ? (
-            <Link href={`/authors/${slug}`} className="hover:underline">
-              {displayName}
-            </Link>
-          ) : (
-            displayName
-          )}
+          <Link href={localeHref(locale, `/authors/${slug}`)} className="hover:underline">
+            {displayName}
+          </Link>
         </CardTitle>
-        {blurb && locale === "en" && <CardDescription>{blurb}</CardDescription>}
+        {blurb && <CardDescription>{blurb}</CardDescription>}
       </CardHeader>
       {(destinations.length > 0 || otherArticles.length > 0) && (
         <CardContent className="space-y-4">
@@ -63,7 +59,7 @@ export default function AuthorCorner({
               </p>
               <div className="flex flex-wrap gap-1.5">
                 {destinations.map((destination) => {
-                  const destHref = locale === "en" ? getDestinationHref(destination) : undefined;
+                  const destHref = getDestinationHref(destination, locale);
                   const label = locale === "ja" ? getPlaceNameJa(destination) : destination;
                   return destHref ? (
                     <Link key={destination} href={destHref}>

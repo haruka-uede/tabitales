@@ -2,8 +2,9 @@
 
 import { useEffect, useRef, useState } from "react";
 import Link from "next/link";
-import { JAPAN_MAP, REGION_OF_PREFECTURE } from "@/lib/japanMap";
+import { JAPAN_MAP, REGION_OF_PREFECTURE, getPlaceNameJa } from "@/lib/japanMap";
 import { slugify } from "@/lib/slug";
+import { href as localeHref, type Locale } from "@/lib/i18n";
 import type { Article } from "@/lib/articles";
 
 type PrefectureData = {
@@ -14,11 +15,25 @@ type PrefectureData = {
 
 type Box = { x: number; y: number; width: number; height: number };
 
+const COPY = {
+  en: {
+    guide: (count: number) => `${count} guide${count === 1 ? "" : "s"}`,
+    prompt: "Tap a highlighted region to see its guides.",
+  },
+  ja: {
+    guide: (count: number) => `${count}件のガイド`,
+    prompt: "地図の色付きのエリアをタップすると、そのガイド一覧が表示されます。",
+  },
+} satisfies Record<Locale, unknown>;
+
 export default function DestinationsMap({
   prefectures,
+  locale = "en" as Locale,
 }: {
   prefectures: PrefectureData[];
+  locale?: Locale;
 }) {
+  const t = COPY[locale];
   const pathRefs = useRef<Record<string, SVGPathElement | null>>({});
   const [regionBoxes, setRegionBoxes] = useState<Record<string, Box>>({});
   const [hoveredRegion, setHoveredRegion] = useState<string | null>(null);
@@ -88,7 +103,11 @@ export default function DestinationsMap({
         {Object.entries(regionBoxes)
           .filter(([region]) => regionArticleCount(region) > 0)
           .map(([region, box]) => (
-            <Link key={region} href={`/${slugify(region)}`} aria-label={region}>
+            <Link
+              key={region}
+              href={localeHref(locale, `/${slugify(region)}`)}
+              aria-label={locale === "ja" ? getPlaceNameJa(region) : region}
+            >
               <rect
                 x={box.x}
                 y={box.y}
@@ -109,13 +128,13 @@ export default function DestinationsMap({
       <div className="text-sm">
         {hoveredRegion ? (
           <div>
-            <h3 className="text-lg font-medium mb-1">{hoveredRegion}</h3>
-            <p className="text-muted-foreground">
-              {regionArticleCount(hoveredRegion)} guide{regionArticleCount(hoveredRegion) === 1 ? "" : "s"}
-            </p>
+            <h3 className="text-lg font-medium mb-1">
+              {locale === "ja" ? getPlaceNameJa(hoveredRegion) : hoveredRegion}
+            </h3>
+            <p className="text-muted-foreground">{t.guide(regionArticleCount(hoveredRegion))}</p>
           </div>
         ) : (
-          <p className="text-muted-foreground">Tap a highlighted region to see its guides.</p>
+          <p className="text-muted-foreground">{t.prompt}</p>
         )}
       </div>
     </div>

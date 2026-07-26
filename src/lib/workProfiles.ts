@@ -8,6 +8,7 @@ import { slugify } from "./slug";
 export const WORK_NAMES_JA: Record<string, string> = {
   [slugify("No Longer Human")]: "人間失格",
   [slugify("Tsugaru")]: "津軽",
+  [slugify("Cocktail Party")]: "カクテル・パーティー",
 };
 
 export function getWorkNameJa(work: string): string {

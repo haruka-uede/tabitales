@@ -8,9 +8,6 @@ import { getWorkNameJa } from "@/lib/workProfiles";
 import { href as localeHref, type Locale } from "@/lib/i18n";
 import type { Article } from "@/lib/articles";
 
-// /authors and /destinations (and their JA equivalents) don't exist for
-// locale="ja" yet, so author names and destination badges render as plain
-// text there instead of links - see the same note in SiteHeader.tsx.
 export default function ArticleCard({
   article,
   locale = "en" as Locale,
@@ -28,13 +25,9 @@ export default function ArticleCard({
             return (
               <span key={name}>
                 {i > 0 && ", "}
-                {locale === "en" ? (
-                  <Link href={`/authors/${slug}`} className="hover:underline">
-                    {label}
-                  </Link>
-                ) : (
-                  label
-                )}
+                <Link href={localeHref(locale, `/authors/${slug}`)} className="hover:underline">
+                  {label}
+                </Link>
               </span>
             );
           })}
@@ -49,7 +42,7 @@ export default function ArticleCard({
         <p className="text-muted-foreground line-clamp-3">{article.frontmatter.description}</p>
         <div className="mt-auto flex flex-wrap gap-1.5 pt-1">
           {article.frontmatter.destinations.map((name) => {
-            const destHref = locale === "en" ? getDestinationHref(name) : undefined;
+            const destHref = getDestinationHref(name, locale);
             const label = locale === "ja" ? getPlaceNameJa(name) : name;
             return destHref ? (
               <Link key={name} href={destHref}>
