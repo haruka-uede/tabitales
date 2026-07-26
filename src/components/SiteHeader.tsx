@@ -31,15 +31,18 @@ export default function SiteHeader({
 }) {
   const t = dictionary[locale].nav;
   const menu = dictionary[locale].menu;
+  // /authors and /destinations don't exist for locale="ja" yet, so both the
+  // nav links and search (below) stay EN-only until JA facet pages exist,
+  // rather than send a JA reader into a 404 or an English-only page.
   const navLinks = [
     { href: href(locale, "/articles"), label: t.guides },
-    { href: href(locale, "/authors"), label: t.authors },
-    { href: href(locale, "/destinations"), label: t.destinations },
+    ...(locale === "en"
+      ? [
+          { href: href(locale, "/authors"), label: t.authors },
+          { href: href(locale, "/destinations"), label: t.destinations },
+        ]
+      : []),
   ];
-  // Search results currently only cover EN content and link into EN-only
-  // facet pages (/authors, /destinations) - hide it on JA until a JA
-  // search index and JA facet pages exist, rather than send a JA reader
-  // into English pages.
   const showSearch = locale === "en" && searchIndex;
 
   return (

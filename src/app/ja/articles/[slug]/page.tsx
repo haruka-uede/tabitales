@@ -1,10 +1,9 @@
 import type { Metadata } from "next";
-import Link from "next/link";
 import { notFound } from "next/navigation";
 import { MDXRemote } from "next-mdx-remote/rsc";
 import { getAllArticles, getArticleBySlug } from "@/lib/articles";
 import { getAuthorNameJa } from "@/lib/authorProfiles";
-import { getDestinationHref, getPlaceNameJa } from "@/lib/japanMap";
+import { getPlaceNameJa } from "@/lib/japanMap";
 import { slugify } from "@/lib/slug";
 import { SITE_NAME, SITE_URL, jsonLdScript } from "@/lib/site";
 import AffiliateDisclosureNoteJa from "@/components/AffiliateDisclosureNoteJa";
@@ -102,34 +101,26 @@ export default async function JaArticlePage({
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: jsonLdScript(breadcrumbJsonLd) }}
       />
+      {/* /ja/authors and /ja/{region} don't exist yet, so this byline stays
+          plain text on JA pages instead of linking into a 404 - see the same
+          note in SiteHeader.tsx. */}
       <p className="text-sm uppercase tracking-wide text-muted-foreground">
         {article.frontmatter.authors.map((name, i) => {
           const authorSlug = slugify(name);
           return (
             <span key={name}>
               {i > 0 && "、"}
-              <Link href={`/ja/authors/${authorSlug}`} className="underline">
-                {getAuthorNameJa(authorSlug, name)}
-              </Link>
+              {getAuthorNameJa(authorSlug, name)}
             </span>
           );
         })}
         {" ・ "}
-        {article.frontmatter.destinations.map((name, i) => {
-          const destHref = getDestinationHref(name, "ja");
-          return (
-            <span key={name}>
-              {i > 0 && "、"}
-              {destHref ? (
-                <Link href={destHref} className="underline">
-                  {getPlaceNameJa(name)}
-                </Link>
-              ) : (
-                getPlaceNameJa(name)
-              )}
-            </span>
-          );
-        })}
+        {article.frontmatter.destinations.map((name, i) => (
+          <span key={name}>
+            {i > 0 && "、"}
+            {getPlaceNameJa(name)}
+          </span>
+        ))}
       </p>
       <h1>{article.frontmatter.title}</h1>
 

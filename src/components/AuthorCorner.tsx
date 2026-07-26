@@ -44,9 +44,13 @@ export default function AuthorCorner({
           {t.aboutTheAuthor}
         </p>
         <CardTitle>
-          <Link href={localeHref(locale, `/authors/${slug}`)} className="hover:underline">
-            {displayName}
-          </Link>
+          {locale === "en" ? (
+            <Link href={`/authors/${slug}`} className="hover:underline">
+              {displayName}
+            </Link>
+          ) : (
+            displayName
+          )}
         </CardTitle>
         {blurb && locale === "en" && <CardDescription>{blurb}</CardDescription>}
       </CardHeader>
@@ -59,7 +63,7 @@ export default function AuthorCorner({
               </p>
               <div className="flex flex-wrap gap-1.5">
                 {destinations.map((destination) => {
-                  const destHref = getDestinationHref(destination, locale);
+                  const destHref = locale === "en" ? getDestinationHref(destination) : undefined;
                   const label = locale === "ja" ? getPlaceNameJa(destination) : destination;
                   return destHref ? (
                     <Link key={destination} href={destHref}>
