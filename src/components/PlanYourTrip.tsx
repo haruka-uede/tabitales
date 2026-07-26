@@ -12,13 +12,15 @@ export default function PlanYourTrip({
   destinations,
   homeBase,
 }: {
-  work: string;
+  // Optional because multi-work collections (src/lib/collections.ts) have no
+  // single book to link to - the "get the book" link is skipped for those.
+  work?: string;
   authors: string[];
   destinations: string[];
   homeBase?: string;
 }) {
   const links = [
-    { href: getBookAffiliateLink(work, authors), label: `Get the book: ${work}` },
+    ...(work ? [{ href: getBookAffiliateLink(work, authors), label: `Get the book: ${work}` }] : []),
     { href: getHotelAffiliateLink(destinations, homeBase), label: "Search hotels" },
     {
       href: getAttractionsAffiliateLink(destinations, homeBase),

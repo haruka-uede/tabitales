@@ -9,9 +9,10 @@ const TYPE_LABELS: Record<SearchEntry["type"], string> = {
   work: "Works",
   author: "Authors",
   destination: "Destinations",
+  collection: "Collections",
 };
 
-const TYPE_ORDER: SearchEntry["type"][] = ["work", "author", "destination"];
+const TYPE_ORDER: SearchEntry["type"][] = ["work", "collection", "author", "destination"];
 
 export default function SearchBox({ index }: { index: SearchEntry[] }) {
   const [query, setQuery] = useState("");

@@ -4,7 +4,7 @@ export type { Locale };
 
 export const dictionary = {
   en: {
-    nav: { guides: "Guides", authors: "Authors", destinations: "Destinations" },
+    nav: { guides: "Guides", authors: "Authors", destinations: "Destinations", collections: "Collections" },
     menu: { open: "Open menu", title: "Menu" },
     language: { switch: "Switch language" },
     cookieNotice: {
@@ -21,7 +21,7 @@ export const dictionary = {
     },
   },
   ja: {
-    nav: { guides: "文学ガイド", authors: "著者", destinations: "行き先" },
+    nav: { guides: "作品", authors: "著者", destinations: "地域", collections: "特集" },
     menu: { open: "メニューを開く", title: "メニュー" },
     language: { switch: "言語を切り替える" },
     cookieNotice: {

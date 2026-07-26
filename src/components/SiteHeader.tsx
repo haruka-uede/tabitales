@@ -32,9 +32,10 @@ export default function SiteHeader({
   const t = dictionary[locale].nav;
   const menu = dictionary[locale].menu;
   const navLinks = [
+    { href: href(locale, "/collections"), label: t.collections },
+    { href: href(locale, "/destinations"), label: t.destinations },
     { href: href(locale, "/articles"), label: t.guides },
     { href: href(locale, "/authors"), label: t.authors },
-    { href: href(locale, "/destinations"), label: t.destinations },
   ];
   // Search results currently only cover EN content and link into EN-only
   // pages - hide it on JA until a JA search index exists, rather than send a

@@ -1,9 +1,10 @@
 import { getAllArticles } from "./articles";
+import { getAllCollections } from "./collections";
 import { slugify } from "./slug";
 import { getDestinationHref } from "./japanMap";
 
 export type SearchEntry = {
-  type: "work" | "author" | "destination";
+  type: "work" | "author" | "destination" | "collection";
   label: string;
   href: string;
   subtitle?: string;
@@ -19,6 +20,15 @@ export function getSearchIndex(): SearchEntry[] {
       label: article.frontmatter.work,
       href: `/articles/${article.slug}`,
       subtitle: article.frontmatter.authors.join(", "),
+    });
+  }
+
+  for (const collection of getAllCollections()) {
+    entries.push({
+      type: "collection",
+      label: collection.frontmatter.title,
+      href: `/collections/${collection.slug}`,
+      subtitle: collection.frontmatter.authors.join(", "),
     });
   }
 

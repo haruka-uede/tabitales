@@ -58,6 +58,13 @@ export function getArticleBySlug(slug: string, locale: Locale = "en"): Article |
   return doc ? toArticle(doc) : null;
 }
 
+// Looks up the single-work article for a given book title, so multi-work
+// collections (src/lib/collections.ts) can link each work they mention back
+// to its own dedicated guide, where one exists.
+export function getArticleByWork(work: string, locale: Locale = "en"): Article | null {
+  return getAllArticles({ locale }).find((a) => a.frontmatter.work === work) ?? null;
+}
+
 function groupByFacet(
   articles: Article[],
   getValues: (article: Article) => string[]

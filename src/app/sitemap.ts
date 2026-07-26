@@ -1,5 +1,6 @@
 import type { MetadataRoute } from "next";
 import { getAllArticles, getAllAuthors, getArticleBySlug, getArticlesByDestination } from "@/lib/articles";
+import { getAllCollections, getCollectionBySlug } from "@/lib/collections";
 import { JAPAN_MAP, REGION_NAMES, REGION_OF_PREFECTURE } from "@/lib/japanMap";
 import { slugify } from "@/lib/slug";
 import { SITE_URL } from "@/lib/site";
@@ -8,10 +9,10 @@ import { SITE_URL } from "@/lib/site";
 // /authors, /destinations, and region/prefecture pages are deferred for JA
 // (see the bilingual expansion plan), so they're intentionally left off
 // both this list and the EN routes' hreflang alternates below.
-const JA_STATIC_ROUTES = ["", "/articles", "/disclosure", "/privacy-policy", "/contact"];
+const JA_STATIC_ROUTES = ["", "/articles", "/collections", "/disclosure", "/privacy-policy", "/contact"];
 
 export default function sitemap(): MetadataRoute.Sitemap {
-  const staticRoutes = ["", "/articles", "/authors", "/destinations", "/disclosure", "/privacy-policy", "/contact"].map((route) => ({
+  const staticRoutes = ["", "/articles", "/authors", "/destinations", "/collections", "/disclosure", "/privacy-policy", "/contact"].map((route) => ({
     url: `${SITE_URL}${route}`,
     lastModified: new Date(),
     alternates: {
@@ -58,6 +59,31 @@ export default function sitemap(): MetadataRoute.Sitemap {
     },
   }));
 
+  const collectionRoutes = getAllCollections().map((collection) => {
+    const hasJaVersion = !!getCollectionBySlug(collection.slug, "ja");
+    return {
+      url: `${SITE_URL}/collections/${collection.slug}`,
+      lastModified: collection.frontmatter.publishedAt,
+      alternates: {
+        languages: {
+          en: `${SITE_URL}/collections/${collection.slug}`,
+          ...(hasJaVersion ? { ja: `${SITE_URL}/ja/collections/${collection.slug}` } : {}),
+        },
+      },
+    };
+  });
+
+  const jaCollectionRoutes = getAllCollections({ locale: "ja" }).map((collection) => ({
+    url: `${SITE_URL}/ja/collections/${collection.slug}`,
+    lastModified: collection.frontmatter.publishedAt,
+    alternates: {
+      languages: {
+        en: `${SITE_URL}/collections/${collection.slug}`,
+        ja: `${SITE_URL}/ja/collections/${collection.slug}`,
+      },
+    },
+  }));
+
   const authorRoutes = getAllAuthors().map((author) => ({
     url: `${SITE_URL}/authors/${author.slug}`,
     lastModified: new Date(),
@@ -82,6 +108,8 @@ export default function sitemap(): MetadataRoute.Sitemap {
     ...jaStaticRoutes,
     ...articleRoutes,
     ...jaArticleRoutes,
+    ...collectionRoutes,
+    ...jaCollectionRoutes,
     ...authorRoutes,
     ...regionRoutes,
     ...prefectureRoutes,
