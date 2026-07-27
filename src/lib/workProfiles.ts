@@ -7,7 +7,7 @@ import { slugify } from "./slug";
 // AUTHOR_PROFILES.nameJa in authorProfiles.ts.
 export const WORK_NAMES_JA: Record<string, string> = {
   [slugify("No Longer Human")]: "人間失格",
-  [slugify("Tsugaru")]: "津軽",
+  [slugify("Return to Tsugaru")]: "津軽",
   [slugify("Cocktail Party")]: "カクテル・パーティー",
   [slugify("Black Rain")]: "黒い雨",
   [slugify("1Q84")]: "1Q84",
