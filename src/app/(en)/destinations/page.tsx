@@ -34,7 +34,7 @@ export default function DestinationsPage() {
           <Card key={destination.slug}>
             <CardHeader>
               <CardTitle>
-                <Link href={`/${destination.slug}`} className="hover:underline">
+                <Link href={`/destinations/${destination.slug}`} className="hover:underline">
                   {destination.name}
                 </Link>
               </CardTitle>

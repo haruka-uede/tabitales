@@ -31,7 +31,7 @@ export async function generateMetadata({
   const { region, prefecture } = await params;
   const location = findPrefecture(region, prefecture);
   if (!location) return {};
-  return { title: location.name, alternates: { canonical: `/${region}/${prefecture}` } };
+  return { title: location.name, alternates: { canonical: `/destinations/${region}/${prefecture}` } };
 }
 
 export default async function PrefecturePage({
@@ -49,7 +49,7 @@ export default async function PrefecturePage({
   return (
     <div className="max-w-4xl mx-auto px-6 py-12">
       <p className="text-sm mb-6">
-        <Link href={`/${region}`} className="text-muted-foreground hover:underline">
+        <Link href={`/destinations/${region}`} className="text-muted-foreground hover:underline">
           ← {regionName}
         </Link>
       </p>

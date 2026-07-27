@@ -92,14 +92,14 @@ export default function sitemap(): MetadataRoute.Sitemap {
   const regionRoutes = REGION_NAMES.filter(
     (name) => getArticlesByDestination(slugify(name)).length > 0
   ).map((name) => ({
-    url: `${SITE_URL}/${slugify(name)}`,
+    url: `${SITE_URL}/destinations/${slugify(name)}`,
     lastModified: new Date(),
   }));
 
   const prefectureRoutes = JAPAN_MAP.locations
     .filter((location) => getArticlesByDestination(location.id).length > 0)
     .map((location) => ({
-      url: `${SITE_URL}/${slugify(REGION_OF_PREFECTURE[location.id])}/${location.id}`,
+      url: `${SITE_URL}/destinations/${slugify(REGION_OF_PREFECTURE[location.id])}/${location.id}`,
       lastModified: new Date(),
     }));
 

@@ -32,7 +32,7 @@ export default function JaDestinationsPage() {
           <Card key={destination.slug}>
             <CardHeader>
               <CardTitle>
-                <Link href={`/ja/${destination.slug}`} className="hover:underline">
+                <Link href={`/ja/destinations/${destination.slug}`} className="hover:underline">
                   {getPlaceNameJa(destination.name)}
                 </Link>
               </CardTitle>

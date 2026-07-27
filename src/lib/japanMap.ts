@@ -140,15 +140,15 @@ export function getPlaceNameJa(name: string): string {
 
 // A destination tag is always either a region name or a prefecture id, per
 // the destination tagging rule (no municipality level yet) - so this always
-// resolves to either /{region} or /{region}/{prefecture} (with a /ja prefix
-// for locale "ja").
+// resolves to either /destinations/{region} or /destinations/{region}/{prefecture}
+// (with a /ja prefix for locale "ja").
 export function getDestinationHref(name: string, locale: Locale = "en"): string | null {
   const slug = slugify(name);
   if (REGION_NAMES.some((region) => slugify(region) === slug)) {
-    return href(locale, `/${slug}`);
+    return href(locale, `/destinations/${slug}`);
   }
   if (PREFECTURE_IDS.has(slug)) {
-    return href(locale, `/${slugify(REGION_OF_PREFECTURE[slug])}/${slug}`);
+    return href(locale, `/destinations/${slugify(REGION_OF_PREFECTURE[slug])}/${slug}`);
   }
   return null;
 }

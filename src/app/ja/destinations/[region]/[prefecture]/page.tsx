@@ -33,7 +33,7 @@ export async function generateMetadata({
   if (!location) return {};
   return {
     title: getPlaceNameJa(location.name),
-    alternates: { canonical: `/ja/${region}/${prefecture}` },
+    alternates: { canonical: `/ja/destinations/${region}/${prefecture}` },
   };
 }
 
@@ -52,7 +52,7 @@ export default async function JaPrefecturePage({
   return (
     <div className="max-w-4xl mx-auto px-6 py-12">
       <p className="text-sm mb-6">
-        <Link href={`/ja/${region}`} className="text-muted-foreground hover:underline">
+        <Link href={`/ja/destinations/${region}`} className="text-muted-foreground hover:underline">
           ← {getPlaceNameJa(regionName)}
         </Link>
       </p>

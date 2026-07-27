@@ -105,7 +105,7 @@ export default function DestinationsMap({
           .map(([region, box]) => (
             <Link
               key={region}
-              href={localeHref(locale, `/${slugify(region)}`)}
+              href={localeHref(locale, `/destinations/${slugify(region)}`)}
               aria-label={locale === "ja" ? getPlaceNameJa(region) : region}
             >
               <rect
