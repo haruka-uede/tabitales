@@ -9,6 +9,7 @@ export default function SiteFooter({ locale = "en" as Locale }: { locale?: Local
       <div className="max-w-4xl mx-auto px-6 py-8 text-sm text-muted-foreground flex justify-between">
         <span>© {new Date().getFullYear()} Tabi Tales</span>
         <span className="flex gap-6">
+          <Link href={href(locale, "/about")}>{t.about}</Link>
           <Link href={href(locale, "/contact")}>{t.contact}</Link>
           <Link href={href(locale, "/disclosure")}>{t.disclosure}</Link>
           <Link href={href(locale, "/privacy-policy")}>{t.privacyPolicy}</Link>

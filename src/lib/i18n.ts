@@ -15,6 +15,7 @@ export const dictionary = {
       accept: "Accept",
     },
     footer: {
+      about: "About",
       contact: "Contact",
       disclosure: "Affiliate Disclosure",
       privacyPolicy: "Privacy Policy",
@@ -32,6 +33,7 @@ export const dictionary = {
       accept: "同意する",
     },
     footer: {
+      about: "Tabi Talesについて",
       contact: "お問い合わせ",
       disclosure: "アフィリエイト開示",
       privacyPolicy: "プライバシーポリシー",
