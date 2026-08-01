@@ -1,4 +1,5 @@
 import Link from "next/link";
+import CookiePreferencesLink from "@/components/CookiePreferencesLink";
 import { dictionary, href, type Locale } from "@/lib/i18n";
 
 export default function SiteFooter({ locale = "en" as Locale }: { locale?: Locale }) {
@@ -13,6 +14,7 @@ export default function SiteFooter({ locale = "en" as Locale }: { locale?: Local
           <Link href={href(locale, "/contact")}>{t.contact}</Link>
           <Link href={href(locale, "/disclosure")}>{t.disclosure}</Link>
           <Link href={href(locale, "/privacy-policy")}>{t.privacyPolicy}</Link>
+          <CookiePreferencesLink locale={locale} />
         </span>
       </div>
     </footer>

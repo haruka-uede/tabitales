@@ -2,7 +2,7 @@
 
 import { useEffect, useState } from "react";
 import Link from "next/link";
-import { getStoredConsent, setStoredConsent } from "@/lib/consent";
+import { setStoredConsent, shouldShowConsentBanner } from "@/lib/consent";
 import { Button } from "@/components/ui/button";
 import { dictionary, href, type Locale } from "@/lib/i18n";
 
@@ -13,14 +13,21 @@ export default function CookieNotice({ locale = "en" as Locale }: { locale?: Loc
   useEffect(() => {
     // localStorage isn't available during SSR, so consent must be read after mount.
     // eslint-disable-next-line react-hooks/set-state-in-effect
-    setVisible(getStoredConsent() === null);
+    setVisible(shouldShowConsentBanner());
+    const recheck = () => setVisible(shouldShowConsentBanner());
+    const forceOpen = () => setVisible(true);
+    window.addEventListener("consent-changed", recheck);
+    window.addEventListener("open-cookie-preferences", forceOpen);
+    return () => {
+      window.removeEventListener("consent-changed", recheck);
+      window.removeEventListener("open-cookie-preferences", forceOpen);
+    };
   }, []);
 
   if (!visible) return null;
 
   function choose(value: "accepted" | "declined") {
     setStoredConsent(value);
-    setVisible(false);
   }
 
   return (
