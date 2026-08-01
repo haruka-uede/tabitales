@@ -2,7 +2,7 @@ import type { Metadata } from "next";
 import Link from "next/link";
 import { notFound } from "next/navigation";
 import { MDXRemote } from "next-mdx-remote/rsc";
-import { getAllCollections, getCollectionBySlug } from "@/lib/collections";
+import { extractMapStops, getAllCollections, getCollectionBySlug } from "@/lib/collections";
 import { getAuthorNameJa } from "@/lib/authorProfiles";
 import { getDestinationHref, getPlaceNameJa } from "@/lib/japanMap";
 import { slugify } from "@/lib/slug";
@@ -11,8 +11,9 @@ import AffiliateDisclosureNoteJa from "@/components/AffiliateDisclosureNoteJa";
 import AffiliateDisclosureBannerJa from "@/components/AffiliateDisclosureBannerJa";
 import AuthorCorner from "@/components/AuthorCorner";
 import FeaturedWorks from "@/components/FeaturedWorks";
-import MapLinkJa from "@/components/MapLinkJa";
+import MapRouteLinkJa from "@/components/MapRouteLinkJa";
 import PlanYourTrip from "@/components/PlanYourTrip";
+import StopImageJa from "@/components/StopImageJa";
 
 export function generateStaticParams() {
   return getAllCollections({ locale: "ja" }).map((collection) => ({ slug: collection.slug }));
@@ -137,7 +138,17 @@ export default async function JaCollectionPage({
 
       <MDXRemote
         source={collection.content}
-        components={{ AffiliateDisclosureNote: AffiliateDisclosureNoteJa, MapLink: MapLinkJa }}
+        components={{
+          AffiliateDisclosureNote: AffiliateDisclosureNoteJa,
+          // MapLink stays a silent data source here (each stop's location,
+          // consolidated into the one route link below) rather than a
+          // per-stop button - see MapRouteLinkJa.tsx.
+          MapLink: () => null,
+          MapRouteLink: () => (
+            <MapRouteLinkJa stops={extractMapStops(collection.content)} />
+          ),
+          StopImage: StopImageJa,
+        }}
       />
 
       {collection.frontmatter.authors.map((name) => (

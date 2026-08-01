@@ -9,6 +9,8 @@ const nextConfig: NextConfig = {
       { protocol: "https", hostname: "books.googleusercontent.com" },
       // Amazon product images (candidate source once Associates/PA-API is approved)
       { protocol: "https", hostname: "m.media-amazon.com" },
+      // Wikimedia Commons (CC-licensed stop photos - see StopImage.tsx)
+      { protocol: "https", hostname: "upload.wikimedia.org" },
     ],
   },
 };
