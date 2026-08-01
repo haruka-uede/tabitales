@@ -9,6 +9,7 @@ import { getDestinationHref } from "@/lib/japanMap";
 import { SITE_NAME, SITE_URL, jsonLdScript } from "@/lib/site";
 import AffiliateDisclosureNote from "@/components/AffiliateDisclosureNote";
 import AuthorCorner from "@/components/AuthorCorner";
+import BookList from "@/components/BookList";
 import FeaturedWorks from "@/components/FeaturedWorks";
 import MapRouteLink from "@/components/MapRouteLink";
 import PlanYourTrip from "@/components/PlanYourTrip";
@@ -128,6 +129,8 @@ export default async function CollectionPage({
       <p className="text-muted-foreground">{collection.frontmatter.description}</p>
 
       <FeaturedWorks works={collection.frontmatter.works} />
+
+      <BookList works={collection.frontmatter.works} authors={collection.frontmatter.authors} />
 
       <MDXRemote
         source={collection.content}

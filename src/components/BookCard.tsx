@@ -1,17 +1,17 @@
 import Image from "next/image";
-import { fetchBookInfo } from "@/lib/googleBooks";
+import { getCachedBookInfo } from "@/lib/bookInfoCache";
 import { getBookAffiliateLink } from "@/lib/affiliate";
 import { Card, CardContent } from "@/components/ui/card";
 import BuyBookButton from "@/components/BuyBookButton";
 
-export default async function BookCard({
+export default function BookCard({
   work,
   authors,
 }: {
   work: string;
   authors: string[];
 }) {
-  const book = await fetchBookInfo(work, authors);
+  const book = getCachedBookInfo("en", work);
   if (!book) return null;
 
   const buyLink = getBookAffiliateLink(work, authors);

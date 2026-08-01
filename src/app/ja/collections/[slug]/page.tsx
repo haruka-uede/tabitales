@@ -11,6 +11,7 @@ import { SITE_NAME, SITE_URL, jsonLdScript } from "@/lib/site";
 import AffiliateDisclosureNoteJa from "@/components/AffiliateDisclosureNoteJa";
 import AffiliateDisclosureBannerJa from "@/components/AffiliateDisclosureBannerJa";
 import AuthorCorner from "@/components/AuthorCorner";
+import BookList from "@/components/BookList";
 import FeaturedWorks from "@/components/FeaturedWorks";
 import MapRouteLinkJa from "@/components/MapRouteLinkJa";
 import PlanYourTrip from "@/components/PlanYourTrip";
@@ -136,6 +137,12 @@ export default async function JaCollectionPage({
       <p className="text-muted-foreground">{collection.frontmatter.description}</p>
 
       <FeaturedWorks works={collection.frontmatter.works} locale="ja" />
+
+      <BookList
+        works={collection.frontmatter.works}
+        authors={collection.frontmatter.authors}
+        locale="ja"
+      />
 
       <MDXRemote
         source={collection.content}

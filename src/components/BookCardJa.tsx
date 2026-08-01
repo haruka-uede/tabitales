@@ -1,25 +1,17 @@
 import Image from "next/image";
-import { fetchBookInfo } from "@/lib/googleBooks";
+import { getCachedBookInfo } from "@/lib/bookInfoCache";
 import { getBookAffiliateLink } from "@/lib/affiliate";
-import { getWorkNameJa } from "@/lib/workProfiles";
-import { getAuthorNameJa } from "@/lib/authorProfiles";
-import { slugify } from "@/lib/slug";
 import { Card, CardContent } from "@/components/ui/card";
 import BuyBookButton from "@/components/BuyBookButton";
 
-export default async function BookCardJa({
+export default function BookCardJa({
   work,
   authors,
 }: {
   work: string;
   authors: string[];
 }) {
-  const workJa = getWorkNameJa(work);
-  const authorsJa = authors.map((name) => getAuthorNameJa(slugify(name), name));
-
-  const book =
-    (await fetchBookInfo(workJa, authorsJa, { langRestrict: "ja" })) ??
-    (await fetchBookInfo(work, authors));
+  const book = getCachedBookInfo("ja", work);
   if (!book) return null;
 
   const buyLink = getBookAffiliateLink(work, authors);
