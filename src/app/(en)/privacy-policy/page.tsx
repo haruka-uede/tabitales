@@ -39,13 +39,21 @@ export default function PrivacyPolicyPage() {
         policy for details. Full details on our affiliate relationships are on our{" "}
         <Link href="/disclosure">Affiliate Disclosure page</Link>.
       </p>
+      <p>
+        <strong>Advertising.</strong> We use Google AdSense to show ads on this
+        site. AdSense uses cookies to personalize which ads you see, based on your
+        visits to this and other sites. You can opt out of personalized advertising
+        through{" "}
+        <a href="https://myadcenter.google.com">Google Ad Settings</a>.
+      </p>
 
       <h2>Cookies</h2>
       <p>
-        This site uses cookies for the analytics and affiliate purposes described
-        above. You can control or delete cookies through your browser settings at any
-        time; blocking them won&rsquo;t stop you from reading the site, though it may
-        affect how affiliate referrals are tracked.
+        This site uses cookies for the analytics, affiliate, and advertising
+        purposes described above. You can control or delete cookies through your
+        browser settings at any time; blocking them won&rsquo;t stop you from
+        reading the site, though it may affect how affiliate referrals are tracked
+        and mean you see less relevant ads.
       </p>
 
       <h2>How we use information</h2>
@@ -69,6 +77,12 @@ export default function PrivacyPolicyPage() {
           <strong>Affiliate partners</strong> (e.g. Amazon Associates, Booking.com,
           Viator, as each program goes live) — each governed by that partner&rsquo;s
           own privacy policy
+        </li>
+        <li>
+          <strong>Google AdSense</strong> (advertising) — see{" "}
+          <a href="https://policies.google.com/technologies/ads">
+            Google&rsquo;s advertising policy
+          </a>
         </li>
       </ul>
 

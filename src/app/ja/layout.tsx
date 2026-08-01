@@ -4,6 +4,7 @@ import SiteHeader from "@/components/SiteHeader";
 import SiteFooter from "@/components/SiteFooter";
 import CookieNotice from "@/components/CookieNotice";
 import Analytics from "@/components/Analytics";
+import AdSense from "@/components/AdSense";
 import { SITE_NAME, SITE_URL, jsonLdScript } from "@/lib/site";
 import "../globals.css";
 
@@ -54,6 +55,7 @@ export default function JaRootLayout({
         <SiteFooter locale="ja" />
         <CookieNotice locale="ja" />
         <Analytics />
+        <AdSense />
       </body>
     </html>
   );

@@ -8,7 +8,7 @@ export const dictionary = {
     menu: { open: "Open menu", title: "Menu" },
     language: { switch: "Switch language" },
     cookieNotice: {
-      message: "This site uses cookies for analytics and affiliate link tracking. See our",
+      message: "This site uses cookies for analytics, affiliate link tracking, and personalized advertising. See our",
       privacyPolicy: "Privacy Policy",
       messageSuffix: "for details.",
       decline: "Decline",
@@ -26,7 +26,7 @@ export const dictionary = {
     menu: { open: "メニューを開く", title: "メニュー" },
     language: { switch: "言語を切り替える" },
     cookieNotice: {
-      message: "本サイトはアクセス解析およびアフィリエイトリンクの計測にクッキーを使用しています。詳細は",
+      message: "本サイトはアクセス解析、アフィリエイトリンクの計測、パーソナライズ広告のためにクッキーを使用しています。詳細は",
       privacyPolicy: "プライバシーポリシー",
       messageSuffix: "をご覧ください。",
       decline: "拒否する",

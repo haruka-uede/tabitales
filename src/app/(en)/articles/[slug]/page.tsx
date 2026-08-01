@@ -3,14 +3,16 @@ import Link from "next/link";
 import { notFound } from "next/navigation";
 import { MDXRemote } from "next-mdx-remote/rsc";
 import { getAllArticles, getArticleBySlug } from "@/lib/articles";
+import { extractMapStops } from "@/lib/mapStops";
 import { slugify } from "@/lib/slug";
 import { getDestinationHref } from "@/lib/japanMap";
 import { SITE_NAME, SITE_URL, jsonLdScript } from "@/lib/site";
 import AffiliateDisclosureNote from "@/components/AffiliateDisclosureNote";
 import AuthorCorner from "@/components/AuthorCorner";
 import BookCard from "@/components/BookCard";
-import MapLink from "@/components/MapLink";
+import MapRouteLink from "@/components/MapRouteLink";
 import PlanYourTrip from "@/components/PlanYourTrip";
+import StopImage from "@/components/StopImage";
 
 export function generateStaticParams() {
   return getAllArticles().map((article) => ({ slug: article.slug }));
@@ -131,7 +133,20 @@ export default async function ArticlePage({
 
       <BookCard work={article.frontmatter.work} authors={article.frontmatter.authors} />
 
-      <MDXRemote source={article.content} components={{ AffiliateDisclosureNote, MapLink }} />
+      <MDXRemote
+        source={article.content}
+        components={{
+          AffiliateDisclosureNote,
+          // MapLink stays a silent data source here (each stop's location,
+          // consolidated into the one route link below) rather than a
+          // per-stop button - see MapRouteLink.tsx.
+          MapLink: () => null,
+          MapRouteLink: () => (
+            <MapRouteLink stops={extractMapStops(article.content)} />
+          ),
+          StopImage,
+        }}
+      />
 
       {article.frontmatter.authors.map((name) => (
         <AuthorCorner key={name} name={name} excludeSlug={article.slug} />

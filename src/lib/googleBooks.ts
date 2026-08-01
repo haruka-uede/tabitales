@@ -22,21 +22,40 @@ export async function fetchBookInfo(
   const langParam = options?.langRestrict ? `&langRestrict=${options.langRestrict}` : "";
   const url = `https://www.googleapis.com/books/v1/volumes?q=${query}&maxResults=1${langParam}&key=${apiKey}`;
 
-  try {
-    const res = await fetch(url);
-    if (!res.ok) return null;
+  // One retry after a short delay: this fetch runs once per article per
+  // build (not per visitor), so a single transient failure or rate-limit
+  // blip - plausible when many BookCard fetches fire close together during
+  // static generation - gets baked into the page until the next deploy
+  // rebuilds it. Confirmed this actually happened in production (5 JA
+  // articles stuck showing their English fallback after a build-time miss).
+  for (let attempt = 0; attempt < 2; attempt++) {
+    try {
+      const res = await fetch(url);
+      if (!res.ok) {
+        if (attempt === 0) {
+          await new Promise((resolve) => setTimeout(resolve, 500));
+          continue;
+        }
+        return null;
+      }
 
-    const data = await res.json();
-    const info = data.items?.[0]?.volumeInfo;
-    if (!info) return null;
+      const data = await res.json();
+      const info = data.items?.[0]?.volumeInfo;
+      if (!info) return null;
 
-    return {
-      title: info.title,
-      authors: info.authors,
-      description: info.description,
-      thumbnail: info.imageLinks?.thumbnail?.replace(/^http:/, "https:"),
-    };
-  } catch {
-    return null;
+      return {
+        title: info.title,
+        authors: info.authors,
+        description: info.description,
+        thumbnail: info.imageLinks?.thumbnail?.replace(/^http:/, "https:"),
+      };
+    } catch {
+      if (attempt === 0) {
+        await new Promise((resolve) => setTimeout(resolve, 500));
+        continue;
+      }
+      return null;
+    }
   }
+  return null;
 }

@@ -5,14 +5,16 @@ import { MDXRemote } from "next-mdx-remote/rsc";
 import { getAllArticles, getArticleBySlug } from "@/lib/articles";
 import { getAuthorNameJa } from "@/lib/authorProfiles";
 import { getDestinationHref, getPlaceNameJa } from "@/lib/japanMap";
+import { extractMapStops } from "@/lib/mapStops";
 import { slugify } from "@/lib/slug";
 import { SITE_NAME, SITE_URL, jsonLdScript } from "@/lib/site";
 import AffiliateDisclosureNoteJa from "@/components/AffiliateDisclosureNoteJa";
 import AffiliateDisclosureBannerJa from "@/components/AffiliateDisclosureBannerJa";
 import AuthorCorner from "@/components/AuthorCorner";
 import BookCardJa from "@/components/BookCardJa";
-import MapLinkJa from "@/components/MapLinkJa";
+import MapRouteLinkJa from "@/components/MapRouteLinkJa";
 import PlanYourTrip from "@/components/PlanYourTrip";
+import StopImageJa from "@/components/StopImageJa";
 
 export function generateStaticParams() {
   return getAllArticles({ locale: "ja" }).map((article) => ({ slug: article.slug }));
@@ -141,7 +143,17 @@ export default async function JaArticlePage({
 
       <MDXRemote
         source={article.content}
-        components={{ AffiliateDisclosureNote: AffiliateDisclosureNoteJa, MapLink: MapLinkJa }}
+        components={{
+          AffiliateDisclosureNote: AffiliateDisclosureNoteJa,
+          // MapLink stays a silent data source here (each stop's location,
+          // consolidated into the one route link below) rather than a
+          // per-stop button - see MapRouteLinkJa.tsx.
+          MapLink: () => null,
+          MapRouteLink: () => (
+            <MapRouteLinkJa stops={extractMapStops(article.content)} />
+          ),
+          StopImage: StopImageJa,
+        }}
       />
 
       {article.frontmatter.authors.map((name) => (

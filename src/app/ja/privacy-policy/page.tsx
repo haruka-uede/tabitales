@@ -31,10 +31,17 @@ export default function JaPrivacyPolicyPage() {
         <Link href="/ja/disclosure">アフィリエイト開示ページ</Link>
         をご覧ください。
       </p>
+      <p>
+        <strong>広告。</strong>
+        当サイトはGoogle
+        AdSenseを利用して広告を表示しています。AdSenseは、当サイトおよび他サイトでの閲覧履歴に基づいて、表示する広告をパーソナライズするためにクッキーを使用します。パーソナライズ広告は
+        <a href="https://myadcenter.google.com">Google広告設定</a>
+        から無効にできます。
+      </p>
 
       <h2>クッキーについて</h2>
       <p>
-        当サイトは上記のアクセス解析およびアフィリエイトの目的でクッキーを使用しています。ブラウザの設定からクッキーを管理・削除することはいつでも可能です。ブロックしてもサイトの閲覧自体は可能ですが、アフィリエイト経由の計測に影響する場合があります。
+        当サイトは上記のアクセス解析、アフィリエイト、広告の目的でクッキーを使用しています。ブラウザの設定からクッキーを管理・削除することはいつでも可能です。ブロックしてもサイトの閲覧自体は可能ですが、アフィリエイト経由の計測に影響したり、表示される広告の関連性が下がったりする場合があります。
       </p>
 
       <h2>情報の利用方法</h2>
@@ -55,6 +62,10 @@ export default function JaPrivacyPolicyPage() {
         <li>
           <strong>アフィリエイトパートナー</strong>（Amazonアソシエイト、Booking.comなど、提携が有効になり次第）—
           それぞれのパートナー自身のプライバシーポリシーに準拠します
+        </li>
+        <li>
+          <strong>Google AdSense</strong>（広告）—
+          <a href="https://policies.google.com/technologies/ads">Googleの広告ポリシー</a>
         </li>
       </ul>
 
