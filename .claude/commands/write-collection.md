@@ -89,6 +89,13 @@ Same rules as `translate-article.md` (tone pass, sentence-splitting, register an
 
 `AuthorCorner` (the "About the author" / "著者について" cards at the bottom) is already fully automatic - `page.tsx` loops over `frontmatter.authors` and pulls each one's bio from `src/lib/authorProfiles.ts`. Nothing to write unless a collection features an author with no individual guide yet, in which case add their profile there first (same as any new single-work article would need).
 
-## 8. Review (owner approval, every time)
+## 8. Content standards (every collection, every time)
+
+- Facts (dates, titles, real-place connections) are free to state; wording must always be original, never lifted or lightly paraphrased from Wikipedia/publisher bios.
+- No author photos.
+- Quotes from a novel itself: short, clearly marked as quotes.
+- For anything touching real biographical/historical claims (especially living authors or sensitive historical subject matter), verify via web search rather than training-data memory, and flag for owner sign-off before treating as final.
+
+## 9. Review (owner approval, every time)
 
 Same mechanics as `translate-article.md`: `status: "draft"` throughout drafting. To preview locally, temporarily set `status: "published"` in the file only (never commit this), restart `npm run dev` (both `dynamicParams = false` and `next.config.ts` image-domain changes need a fresh server start, not just a save), view at `http://localhost:3000/collections/<slug>` and `/ja/collections/<slug>`, then set the status back to `"draft"` immediately after. Repeat with `status: "needs_revision"` for any requested changes. Only flip to `"published"` and commit/push once the owner has explicitly approved - never push a draft "for review."
