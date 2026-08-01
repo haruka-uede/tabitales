@@ -2,7 +2,7 @@
 
 import { useEffect, useRef, useState } from "react";
 import Link from "next/link";
-import { JAPAN_MAP, REGION_OF_PREFECTURE, getPlaceNameJa } from "@/lib/japanMap";
+import { JAPAN_MAP, JAPAN_MAP_VIEWBOX, REGION_OF_PREFECTURE, getPlaceNameJa } from "@/lib/japanMap";
 import { slugify } from "@/lib/slug";
 import { href as localeHref, type Locale } from "@/lib/i18n";
 import type { Article } from "@/lib/articles";
@@ -78,7 +78,7 @@ export default function DestinationsMap({
   return (
     <div className="grid sm:grid-cols-[1fr_260px] gap-6 mb-12">
       <svg
-        viewBox={JAPAN_MAP.viewBox}
+        viewBox={JAPAN_MAP_VIEWBOX}
         className="w-full h-auto border border-border rounded-lg bg-muted"
       >
         {JAPAN_MAP.locations.map((location) => {

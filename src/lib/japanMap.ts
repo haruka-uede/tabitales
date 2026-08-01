@@ -16,6 +16,19 @@ export type JapanMap = {
 
 export const JAPAN_MAP = japanMapData as unknown as JapanMap;
 
+// The @svg-maps/japan viewBox is cropped tight to the coastline, so the
+// outline touches the SVG's edge with no breathing room. Pad it out evenly
+// on all sides for display (path coordinates are untouched - this only
+// widens the visible window around them).
+const MAP_PADDING = 20;
+const [mapX, mapY, mapWidth, mapHeight] = JAPAN_MAP.viewBox.split(" ").map(Number);
+export const JAPAN_MAP_VIEWBOX = [
+  mapX - MAP_PADDING,
+  mapY - MAP_PADDING,
+  mapWidth + MAP_PADDING * 2,
+  mapHeight + MAP_PADDING * 2,
+].join(" ");
+
 export const PREFECTURE_IDS = new Set(JAPAN_MAP.locations.map((location) => location.id));
 
 export const REGION_OF_PREFECTURE: Record<string, string> = {
