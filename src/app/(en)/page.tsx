@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import Image from "next/image";
 import Link from "next/link";
 import { getAllArticles } from "@/lib/articles";
 import { OG_IMAGE } from "@/lib/site";
@@ -49,6 +50,14 @@ export default function Home() {
 
   return (
     <div className="max-w-4xl mx-auto px-6 py-16">
+      <Image
+        src={OG_IMAGE.url}
+        alt="Tabi Tales — Guide to Traveling Through Japanese Literature"
+        width={OG_IMAGE.width}
+        height={OG_IMAGE.height}
+        priority
+        className="w-full h-auto rounded-xl mb-10"
+      />
       <h1 className="text-4xl font-semibold tracking-tight max-w-xl">
         Follow Japanese novels to the real places behind them.
       </h1>
