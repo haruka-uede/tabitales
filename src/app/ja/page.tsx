@@ -1,7 +1,28 @@
+import type { Metadata } from "next";
 import Link from "next/link";
 import { getAllArticles } from "@/lib/articles";
 import { Card, CardHeader, CardTitle, CardDescription } from "@/components/ui/card";
 import ArticleCard from "@/components/ArticleCard";
+
+const TITLE = "Tabi Tales — 日本の小説とゆかりの地をめぐる旅";
+const DESCRIPTION =
+  "日本の小説とその舞台となった実在の場所を結びつける文学旅行ガイド。日本旅行を計画している読者のために。";
+
+export const metadata: Metadata = {
+  alternates: {
+    canonical: "/ja",
+    languages: {
+      en: "/",
+      ja: "/ja",
+      "x-default": "/",
+    },
+  },
+  openGraph: {
+    title: TITLE,
+    description: DESCRIPTION,
+    type: "website",
+  },
+};
 
 export default function JaHome() {
   const articles = getAllArticles({ locale: "ja" });

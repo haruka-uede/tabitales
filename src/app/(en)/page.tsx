@@ -1,7 +1,28 @@
+import type { Metadata } from "next";
 import Link from "next/link";
 import { getAllArticles } from "@/lib/articles";
 import { Card, CardHeader, CardTitle, CardDescription } from "@/components/ui/card";
 import ArticleCard from "@/components/ArticleCard";
+
+const TITLE = "Tabi Tales — Follow Japanese Novels to Their Real-World Settings";
+const DESCRIPTION =
+  "Literary travel guides that connect Japanese novels to the real places behind them, for readers planning a trip to Japan.";
+
+export const metadata: Metadata = {
+  alternates: {
+    canonical: "/",
+    languages: {
+      en: "/",
+      ja: "/ja",
+      "x-default": "/",
+    },
+  },
+  openGraph: {
+    title: TITLE,
+    description: DESCRIPTION,
+    type: "website",
+  },
+};
 
 const EXPLORE_LINKS = [
   {

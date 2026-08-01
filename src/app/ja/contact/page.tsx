@@ -23,7 +23,7 @@ export default function JaContactPage() {
         <form action="https://api.web3forms.com/submit" method="POST" className="space-y-4">
           <input type="hidden" name="access_key" value={WEB3FORMS_ACCESS_KEY} />
           <input type="hidden" name="subject" value="New message from Tabi Tales contact form (JA)" />
-          <input type="hidden" name="redirect" value="https://tabitales.jp/ja/contact?sent=true" />
+          <input type="hidden" name="redirect" value="https://www.tabitales.jp/ja/contact?sent=true" />
           <input type="text" name="botcheck" className="hidden" style={{ display: "none" }} tabIndex={-1} autoComplete="off" />
 
           <div>
