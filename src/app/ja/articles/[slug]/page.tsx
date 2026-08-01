@@ -7,7 +7,7 @@ import { getAuthorNameJa } from "@/lib/authorProfiles";
 import { getDestinationHref, getPlaceNameJa } from "@/lib/japanMap";
 import { extractMapStops } from "@/lib/mapStops";
 import { slugify } from "@/lib/slug";
-import { SITE_NAME, SITE_URL, jsonLdScript } from "@/lib/site";
+import { OG_IMAGE, SITE_NAME, SITE_URL, jsonLdScript } from "@/lib/site";
 import AffiliateDisclosureNoteJa from "@/components/AffiliateDisclosureNoteJa";
 import AffiliateDisclosureBannerJa from "@/components/AffiliateDisclosureBannerJa";
 import AuthorCorner from "@/components/AuthorCorner";
@@ -50,6 +50,7 @@ export async function generateMetadata({
       description: article.frontmatter.description,
       type: "article",
       publishedTime: article.frontmatter.publishedAt,
+      images: [OG_IMAGE],
     },
   };
 }

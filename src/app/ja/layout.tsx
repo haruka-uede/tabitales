@@ -5,7 +5,7 @@ import SiteFooter from "@/components/SiteFooter";
 import CookieNotice from "@/components/CookieNotice";
 import Analytics from "@/components/Analytics";
 import AdSense from "@/components/AdSense";
-import { SITE_NAME, SITE_URL, jsonLdScript } from "@/lib/site";
+import { OG_IMAGE, SITE_NAME, SITE_URL, jsonLdScript } from "@/lib/site";
 import "../globals.css";
 
 const geistSans = Geist({
@@ -26,6 +26,9 @@ export const metadata: Metadata = {
   },
   description:
     "日本の小説とその舞台となった実在の場所を結びつける文学旅行ガイド。日本旅行を計画している読者のために。",
+  openGraph: {
+    images: [OG_IMAGE],
+  },
 };
 
 const organizationJsonLd = {

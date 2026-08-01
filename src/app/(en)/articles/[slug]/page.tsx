@@ -6,7 +6,7 @@ import { getAllArticles, getArticleBySlug } from "@/lib/articles";
 import { extractMapStops } from "@/lib/mapStops";
 import { slugify } from "@/lib/slug";
 import { getDestinationHref } from "@/lib/japanMap";
-import { SITE_NAME, SITE_URL, jsonLdScript } from "@/lib/site";
+import { OG_IMAGE, SITE_NAME, SITE_URL, jsonLdScript } from "@/lib/site";
 import AffiliateDisclosureNote from "@/components/AffiliateDisclosureNote";
 import AuthorCorner from "@/components/AuthorCorner";
 import BookCard from "@/components/BookCard";
@@ -48,6 +48,7 @@ export async function generateMetadata({
       description: article.frontmatter.description,
       type: "article",
       publishedTime: article.frontmatter.publishedAt,
+      images: [OG_IMAGE],
     },
   };
 }

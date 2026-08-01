@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import Link from "next/link";
 import { getAllArticles } from "@/lib/articles";
+import { OG_IMAGE } from "@/lib/site";
 import { Card, CardHeader, CardTitle, CardDescription } from "@/components/ui/card";
 import ArticleCard from "@/components/ArticleCard";
 
@@ -21,6 +22,7 @@ export const metadata: Metadata = {
     title: TITLE,
     description: DESCRIPTION,
     type: "website",
+    images: [OG_IMAGE],
   },
 };
 

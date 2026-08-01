@@ -6,7 +6,7 @@ import CookieNotice from "@/components/CookieNotice";
 import Analytics from "@/components/Analytics";
 import AdSense from "@/components/AdSense";
 import { getSearchIndex } from "@/lib/search";
-import { SITE_NAME, SITE_URL, jsonLdScript } from "@/lib/site";
+import { OG_IMAGE, SITE_NAME, SITE_URL, jsonLdScript } from "@/lib/site";
 import "../globals.css";
 
 const geistSans = Geist({
@@ -29,6 +29,9 @@ export const metadata: Metadata = {
     "Literary travel guides that connect Japanese novels to the real places behind them, for readers planning a trip to Japan.",
   verification: {
     google: "XB52W6aEfK4Itembl4aLLhIs9QyuU6nXeYSpZqyEuHc",
+  },
+  openGraph: {
+    images: [OG_IMAGE],
   },
 };
 
