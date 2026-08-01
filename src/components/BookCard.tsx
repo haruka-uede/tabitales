@@ -2,7 +2,7 @@ import Image from "next/image";
 import { fetchBookInfo } from "@/lib/googleBooks";
 import { getBookAffiliateLink } from "@/lib/affiliate";
 import { Card, CardContent } from "@/components/ui/card";
-import { Button } from "@/components/ui/button";
+import BuyBookButton from "@/components/BuyBookButton";
 
 export default async function BookCard({
   work,
@@ -38,15 +38,7 @@ export default async function BookCard({
           {book.description && (
             <p className="text-sm text-muted-foreground line-clamp-3">{book.description}</p>
           )}
-          {buyLink && (
-            <Button
-              size="sm"
-              className="w-fit"
-              render={<a href={buyLink} target="_blank" rel="sponsored noopener" />}
-            >
-              Get the book
-            </Button>
-          )}
+          {buyLink && <BuyBookButton href={buyLink} label="Get the book" />}
         </div>
       </CardContent>
     </Card>

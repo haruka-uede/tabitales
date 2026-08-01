@@ -5,7 +5,7 @@ import { getWorkNameJa } from "@/lib/workProfiles";
 import { getAuthorNameJa } from "@/lib/authorProfiles";
 import { slugify } from "@/lib/slug";
 import { Card, CardContent } from "@/components/ui/card";
-import { Button } from "@/components/ui/button";
+import BuyBookButton from "@/components/BuyBookButton";
 
 export default async function BookCardJa({
   work,
@@ -46,16 +46,7 @@ export default async function BookCardJa({
           {book.description && (
             <p className="text-sm text-muted-foreground line-clamp-3">{book.description}</p>
           )}
-          {buyLink && (
-            <Button
-              size="sm"
-              className="w-fit"
-              nativeButton={false}
-              render={<a href={buyLink} target="_blank" rel="sponsored noopener" />}
-            >
-              書籍を見る
-            </Button>
-          )}
+          {buyLink && <BuyBookButton href={buyLink} label="書籍を見る" />}
         </div>
       </CardContent>
     </Card>
