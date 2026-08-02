@@ -35,6 +35,7 @@ export default function DestinationsMap({
 }) {
   const t = COPY[locale];
   const pathRefs = useRef<Record<string, SVGPathElement | null>>({});
+  const containerRef = useRef<HTMLDivElement>(null);
   const [regionBoxes, setRegionBoxes] = useState<Record<string, Box>>({});
   const [hoveredRegion, setHoveredRegion] = useState<string | null>(null);
 
@@ -76,7 +77,16 @@ export default function DestinationsMap({
     (byRegion.get(region) ?? []).reduce((sum, p) => sum + p.articles.length, 0);
 
   return (
-    <div className="grid sm:grid-cols-[1fr_260px] gap-6 mb-12">
+    <div
+      ref={containerRef}
+      className="grid sm:grid-cols-[1fr_260px] gap-6 mb-12"
+      onMouseLeave={() => setHoveredRegion(null)}
+      onBlur={(e) => {
+        if (!containerRef.current?.contains(e.relatedTarget as Node | null)) {
+          setHoveredRegion(null);
+        }
+      }}
+    >
       <svg
         viewBox={JAPAN_MAP_VIEWBOX}
         className="w-full h-auto border border-border rounded-lg bg-muted"
@@ -117,9 +127,7 @@ export default function DestinationsMap({
                 style={{ pointerEvents: "all" }}
                 className="cursor-pointer outline-none"
                 onMouseEnter={() => setHoveredRegion(region)}
-                onMouseLeave={() => setHoveredRegion((r) => (r === region ? null : r))}
                 onFocus={() => setHoveredRegion(region)}
-                onBlur={() => setHoveredRegion((r) => (r === region ? null : r))}
               />
             </Link>
           ))}
@@ -131,7 +139,21 @@ export default function DestinationsMap({
             <h3 className="text-lg font-medium mb-1">
               {locale === "ja" ? getPlaceNameJa(hoveredRegion) : hoveredRegion}
             </h3>
-            <p className="text-muted-foreground">{t.guide(regionArticleCount(hoveredRegion))}</p>
+            <p className="text-muted-foreground mb-2">{t.guide(regionArticleCount(hoveredRegion))}</p>
+            <ul className="space-y-1">
+              {(byRegion.get(hoveredRegion) ?? [])
+                .filter((prefecture) => prefecture.articles.length > 0)
+                .map((prefecture) => (
+                  <li key={prefecture.id}>
+                    <Link
+                      href={localeHref(locale, `/destinations/${slugify(hoveredRegion)}/${prefecture.id}`)}
+                      className="hover:underline"
+                    >
+                      {locale === "ja" ? getPlaceNameJa(prefecture.id) : prefecture.name}
+                    </Link>
+                  </li>
+                ))}
+            </ul>
           </div>
         ) : (
           <p className="text-muted-foreground">{t.prompt}</p>
