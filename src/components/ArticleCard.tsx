@@ -1,3 +1,4 @@
+import Image from "next/image";
 import Link from "next/link";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
@@ -17,6 +18,15 @@ export default function ArticleCard({
 }) {
   return (
     <Card className="flex h-full flex-col">
+      {article.frontmatter.image && (
+        <Image
+          src={article.frontmatter.image}
+          alt={locale === "ja" ? getWorkNameJa(article.frontmatter.work) : article.frontmatter.work}
+          width={800}
+          height={450}
+          className="h-48 w-full object-cover"
+        />
+      )}
       <CardHeader>
         <p className="text-xs uppercase tracking-wide text-muted-foreground">
           {article.frontmatter.authors.map((name, i) => {

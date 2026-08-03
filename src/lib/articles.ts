@@ -14,6 +14,7 @@ export type ArticleFrontmatter = {
   homeBase?: string;
   publishedAt: string;
   status: ArticleStatus;
+  image?: string;
 };
 
 export type Article = {
@@ -33,11 +34,12 @@ export type Facet = {
 // build time (via the Zod schema in content-collections.ts), so a malformed
 // or missing field fails the build instead of shipping a broken page.
 function toArticle(doc: (typeof allArticles)[number]): Article {
-  const { title, description, work, authors, destinations, homeBase, publishedAt, status, content } = doc;
+  const { title, description, work, authors, destinations, homeBase, publishedAt, status, image, content } =
+    doc;
   return {
     slug: doc.slug,
     locale: doc.locale,
-    frontmatter: { title, description, work, authors, destinations, homeBase, publishedAt, status },
+    frontmatter: { title, description, work, authors, destinations, homeBase, publishedAt, status, image },
     content,
   };
 }

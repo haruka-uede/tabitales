@@ -51,7 +51,7 @@ export async function generateMetadata({
       description: collection.frontmatter.description,
       type: "article",
       publishedTime: collection.frontmatter.publishedAt,
-      images: [OG_IMAGE],
+      images: [collection.frontmatter.image ?? OG_IMAGE],
     },
   };
 }

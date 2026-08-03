@@ -1,3 +1,4 @@
+import Image from "next/image";
 import Link from "next/link";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
@@ -16,6 +17,15 @@ export default function CollectionCard({
 }) {
   return (
     <Card className="flex h-full flex-col">
+      {collection.frontmatter.image && (
+        <Image
+          src={collection.frontmatter.image}
+          alt={collection.frontmatter.title}
+          width={800}
+          height={450}
+          className="h-48 w-full object-cover"
+        />
+      )}
       <CardHeader>
         <p className="text-xs uppercase tracking-wide text-muted-foreground">
           {collection.frontmatter.authors.map((name, i) => {

@@ -50,7 +50,7 @@ export async function generateMetadata({
       description: article.frontmatter.description,
       type: "article",
       publishedTime: article.frontmatter.publishedAt,
-      images: [OG_IMAGE],
+      images: [article.frontmatter.image ?? OG_IMAGE],
     },
   };
 }

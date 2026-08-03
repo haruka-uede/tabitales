@@ -10,6 +10,7 @@ export type CollectionFrontmatter = {
   homeBase?: string;
   publishedAt: string;
   status: ArticleStatus;
+  image?: string;
 };
 
 export type ThemeCollection = {
@@ -20,12 +21,22 @@ export type ThemeCollection = {
 };
 
 function toCollection(doc: (typeof allCollections)[number]): ThemeCollection {
-  const { title, description, works, authors, destinations, homeBase, publishedAt, status, content } =
+  const { title, description, works, authors, destinations, homeBase, publishedAt, status, image, content } =
     doc;
   return {
     slug: doc.slug,
     locale: doc.locale,
-    frontmatter: { title, description, works, authors, destinations, homeBase, publishedAt, status },
+    frontmatter: {
+      title,
+      description,
+      works,
+      authors,
+      destinations,
+      homeBase,
+      publishedAt,
+      status,
+      image,
+    },
     content,
   };
 }
