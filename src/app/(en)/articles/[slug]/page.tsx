@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import Image from "next/image";
 import Link from "next/link";
 import { notFound } from "next/navigation";
 import { MDXRemote } from "next-mdx-remote/rsc";
@@ -103,6 +104,16 @@ export default async function ArticlePage({
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: jsonLdScript(breadcrumbJsonLd) }}
       />
+      {article.frontmatter.image && (
+        <Image
+          src={article.frontmatter.image}
+          alt={article.frontmatter.work}
+          width={1672}
+          height={941}
+          priority
+          className="not-prose w-full h-auto rounded-xl"
+        />
+      )}
       <p className="text-sm uppercase tracking-wide text-muted-foreground">
         {article.frontmatter.authors.map((name, i) => (
           <span key={name}>

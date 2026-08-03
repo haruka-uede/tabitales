@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import Image from "next/image";
 import Link from "next/link";
 import { notFound } from "next/navigation";
 import { MDXRemote } from "next-mdx-remote/rsc";
@@ -100,6 +101,16 @@ export default async function CollectionPage({
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: jsonLdScript(breadcrumbJsonLd) }}
       />
+      {collection.frontmatter.image && (
+        <Image
+          src={collection.frontmatter.image}
+          alt={collection.frontmatter.title}
+          width={1672}
+          height={941}
+          priority
+          className="not-prose w-full h-auto rounded-xl"
+        />
+      )}
       <p className="text-sm uppercase tracking-wide text-muted-foreground">
         {collection.frontmatter.authors.map((name, i) => (
           <span key={name}>
