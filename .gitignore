@@ -43,5 +43,10 @@ next-env.d.ts
 # content-collections
 .content-collections
 
+# staging area for eyecatch images before they're renamed/sorted into
+# public/images/{articles,collections} - see .claude/commands/add-eyecatch-image.md
+/image-inbox/*
+!/image-inbox/.gitkeep
+
 .vercel
 .env*
