@@ -1,6 +1,16 @@
 import { defineCollection, defineConfig } from "@content-collections/core";
 import { z } from "zod";
 
+// Either a local /public path (e.g. "/images/articles/some-slug.jpg") or a
+// full external URL (e.g. a licensed Wikimedia Commons photo) - see the
+// `image` field comment below for how each is stored/sourced.
+const imageField = z
+  .string()
+  .refine((v) => v.startsWith("/") || /^https?:\/\//.test(v), {
+    message: "image must be a local /public path or an http(s) URL",
+  })
+  .optional();
+
 const articles = defineCollection({
   name: "articles",
   directory: "content/articles",
@@ -17,7 +27,12 @@ const articles = defineCollection({
     // Eyecatch image: shown on ArticleCard and used as this article's
     // og:image/twitter:image, overriding the site-wide OG_IMAGE default.
     // Optional - falls back gracefully wherever unset (see src/lib/site.ts).
-    image: z.string().url().optional(),
+    // Custom-designed graphics go in public/images/articles/{slug}.{ext} and
+    // are referenced here as "/images/articles/{slug}.{ext}"; a real-world
+    // photo instead follows the same Wikimedia Commons sourcing/licensing
+    // rules as StopImage (see write-article.md step 5) and is referenced by
+    // its full commons URL - never downloaded into the repo.
+    image: imageField,
     content: z.string(),
   }),
   // Locale and slug come from where the file lives (content/articles/<locale>/<slug>.mdx),
@@ -45,9 +60,10 @@ const collections = defineCollection({
     homeBase: z.string().optional(),
     publishedAt: z.string(),
     status: z.enum(["draft", "needs_revision", "published", "retired"]),
-    // Same eyecatch-image field as articles - see content-collections.ts's
-    // articles schema comment.
-    image: z.string().url().optional(),
+    // Same eyecatch-image field as articles (public/images/collections/{slug}.{ext}
+    // for a custom graphic, or a full Commons URL for a real photo) - see the
+    // articles schema comment above.
+    image: imageField,
     content: z.string(),
   }),
   transform: (doc) => ({
