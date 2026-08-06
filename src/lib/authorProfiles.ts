@@ -62,6 +62,13 @@ export const AUTHOR_PROFILES: Record<string, AuthorProfile> = {
     blurbJa:
       "井伏鱒二は、生涯を通じて市井の人々の暮らしを、抑えた筆致とユーモアで描き続けた作家である。代表作『黒い雨』(1966年)は、実在する被爆者の日記をもとに書かれている。",
   },
+  [slugify("Ryunosuke Akutagawa")]: {
+    nameJa: "芥川龍之介",
+    blurb:
+      "Often called the father of the Japanese short story, and the namesake of the Akutagawa Prize, Japan's top literary award for new writers. Spinning Gears, one of his last works, was finished weeks before his 1927 suicide, and reads as a near-direct record of the paranoia that consumed him.",
+    blurbJa:
+      "「日本近代文学の父」とも称され、新人作家に贈られる日本最高峰の文学賞、芥川賞にその名を残す。晩年の作品『歯車』は、1927年に自殺する数週間前に書き上げられたもので、当時彼を蝕んでいた妄想をほぼそのまま記録したような作品である。",
+  },
 };
 
 export function getAuthorNameJa(slug: string, fallback: string): string {
