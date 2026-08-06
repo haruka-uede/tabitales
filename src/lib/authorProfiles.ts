@@ -69,6 +69,13 @@ export const AUTHOR_PROFILES: Record<string, AuthorProfile> = {
     blurbJa:
       "「日本近代文学の父」とも称され、新人作家に贈られる日本最高峰の文学賞、芥川賞にその名を残す。晩年の作品『歯車』は、1927年に自殺する数週間前に書き上げられたもので、当時彼を蝕んでいた妄想をほぼそのまま記録したような作品である。",
   },
+  [slugify("Murasaki Shikibu")]: {
+    nameJa: "紫式部",
+    blurb:
+      "A lady-in-waiting at the Heian-era imperial court around the year 1000, and the author of The Tale of Genji — widely considered the world's first novel. Little is known of her real life beyond her own diary and the court records of the time; even \"Murasaki Shikibu\" is a later nickname, not her birth name, which was never recorded.",
+    blurbJa:
+      "紫式部は、西暦1000年前後の平安朝廷に仕えた女房であり、世界最古の小説とされる『源氏物語』の作者である。実生活について分かっていることは、自身の日記や当時の宮廷記録から知られる範囲にとどまる。「紫式部」という呼び名自体も後世につけられたもので、本名は記録に残っていない。",
+  },
 };
 
 export function getAuthorNameJa(slug: string, fallback: string): string {

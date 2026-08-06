@@ -22,6 +22,7 @@ export const WORK_NAMES_JA: Record<string, string> = {
   [slugify("Naomi")]: "痴人の愛",
   [slugify("A Portrait of Shunkin")]: "春琴抄",
   [slugify("Spinning Gears")]: "歯車",
+  [slugify("The Tale of Genji")]: "源氏物語",
 };
 
 export function getWorkNameJa(work: string): string {
