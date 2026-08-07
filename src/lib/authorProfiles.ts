@@ -76,6 +76,13 @@ export const AUTHOR_PROFILES: Record<string, AuthorProfile> = {
     blurbJa:
       "紫式部は、西暦1000年前後の平安朝廷に仕えた女房であり、世界最古の小説とされる『源氏物語』の作者である。実生活について分かっていることは、自身の日記や当時の宮廷記録から知られる範囲にとどまる。「紫式部」という呼び名自体も後世につけられたもので、本名は記録に残っていない。",
   },
+  [slugify("Kenji Miyazawa")]: {
+    nameJa: "宮沢賢治",
+    blurb:
+      "A poet, children's-story writer, agricultural teacher, and devout Buddhist who spent nearly all of his short life in rural Iwate. Night on the Galactic Railroad, his best-known work, was still unfinished when he died of illness in 1933 at 37; it was assembled from his notebooks and published the following year.",
+    blurbJa:
+      "宮沢賢治は、詩人・童話作家・農学校教師であり、熱心な法華信者でもあった。その短い生涯のほとんどを、故郷である岩手の農村で過ごしている。代表作『銀河鉄道の夜』は、1933年に37歳で病没した時点でも未完のままであり、残された手帳やノートをもとに翌年出版された。",
+  },
 };
 
 export function getAuthorNameJa(slug: string, fallback: string): string {
