@@ -3,7 +3,7 @@ import { slugify } from "./slug";
 
 export type Locale = "en" | "ja";
 
-export type ArticleStatus = "draft" | "needs_revision" | "published" | "retired";
+export type ArticleStatus = "draft" | "needs_revision" | "published" | "retired" | "Abolition";
 
 export type ArticleFrontmatter = {
   title: string;

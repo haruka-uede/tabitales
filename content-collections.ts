@@ -23,7 +23,7 @@ const articles = defineCollection({
     destinations: z.array(z.string()),
     homeBase: z.string().optional(),
     publishedAt: z.string(),
-    status: z.enum(["draft", "needs_revision", "published", "retired"]),
+    status: z.enum(["draft", "needs_revision", "published", "retired", "Abolition"]),
     // Eyecatch image: shown on ArticleCard and used as this article's
     // og:image/twitter:image, overriding the site-wide OG_IMAGE default.
     // Optional - falls back gracefully wherever unset (see src/lib/site.ts).
@@ -59,7 +59,7 @@ const collections = defineCollection({
     destinations: z.array(z.string()),
     homeBase: z.string().optional(),
     publishedAt: z.string(),
-    status: z.enum(["draft", "needs_revision", "published", "retired"]),
+    status: z.enum(["draft", "needs_revision", "published", "retired", "Abolition"]),
     // Same eyecatch-image field as articles (public/images/collections/{slug}.{ext}
     // for a custom graphic, or a full Commons URL for a real photo) - see the
     // articles schema comment above.
