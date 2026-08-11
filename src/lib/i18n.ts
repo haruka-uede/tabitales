@@ -20,6 +20,7 @@ export const dictionary = {
       disclosure: "Affiliate Disclosure",
       privacyPolicy: "Privacy Policy",
       cookiePreferences: "Cookie Preferences",
+      more: "More",
     },
   },
   ja: {
@@ -39,6 +40,7 @@ export const dictionary = {
       disclosure: "アフィリエイト開示",
       privacyPolicy: "プライバシーポリシー",
       cookiePreferences: "Cookie設定を変更する",
+      more: "その他",
     },
   },
 } satisfies Record<Locale, unknown>;
