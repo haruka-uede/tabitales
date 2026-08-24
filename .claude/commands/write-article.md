@@ -67,6 +67,8 @@ here in the book, and what's physically there today}
 
 **Paragraph length**: short paragraphs, blog style, not dense blocks (2-4 sentences, new paragraph on every topic shift) — see `CLAUDE.md`. This applies throughout, including the intro.
 
+**Applies beyond the intro too** (see `CLAUDE.md` "Editorial priority: atmosphere over fact-precision"): don't let the "Getting there"/"Good to know" bullets or a wall of verifiable specifics (bus transfer times to the minute, item counts in a museum display) crowd out the feeling of a stop before the reader has any reason to care. Give the scene/emotional hook room to land first, then the logistics — and keep those logistics rounded/practical ("about two hours via X, check current times") rather than falsely precise, unless the precision is safety- or plan-critical (last bus of the day, a museum's actual closing day).
+
 ### The intro
 
 The intro paragraph's job is to make the reader want to go, not to summarize the plot. Two standing rules:
@@ -88,7 +90,7 @@ Same rules as `write-collection.md` step 5 — Wikimedia Commons only, CC0/CC BY
 - Facts (dates, titles, real-place connections) are free to state; wording must always be original, never lifted or lightly paraphrased from Wikipedia/publisher bios.
 - No author photos.
 - Quotes from the novel itself: short, clearly marked as quotes.
-- For anything touching real biographical/historical claims (especially living authors or sensitive historical subject matter), verify via web search rather than training-data memory, and flag for owner sign-off before treating as final.
+- Verify via web search rather than training-data memory, and flag for owner sign-off, when a claim would actually mislead or strand a reader if wrong: whether a novel's character is being presented as a real documented person (or vice versa), a work's copyright/legal status, a living author's biography, sensitive historical subject matter, or logistics precise enough that a reader would plan around them (last departure of the day, whether a site is currently open). Don't burn the same scrutiny on atmospheric or inconsequential specifics — see `CLAUDE.md` "Editorial priority: atmosphere over fact-precision".
 
 ## 7. JA translation — same session, not a follow-up
 
