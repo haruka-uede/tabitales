@@ -19,6 +19,7 @@ import {
 import { Button } from "@/components/ui/button";
 import SearchBox from "@/components/SearchBox";
 import LanguageSwitcher from "@/components/LanguageSwitcher";
+import ThemeToggle from "@/components/ThemeToggle";
 import type { SearchEntry } from "@/lib/search";
 import { dictionary, href, type Locale } from "@/lib/i18n";
 
@@ -63,11 +64,13 @@ export default function SiteHeader({
           </NavigationMenu>
           {showSearch && <SearchBox index={searchIndex} />}
           <LanguageSwitcher locale={locale} />
+          <ThemeToggle locale={locale} />
         </div>
 
         <div className="flex sm:hidden items-center gap-2">
           {showSearch && <SearchBox index={searchIndex} />}
           <LanguageSwitcher locale={locale} />
+          <ThemeToggle locale={locale} />
           <Sheet>
             <SheetTrigger
               render={<Button variant="ghost" size="icon" aria-label={menu.open} />}

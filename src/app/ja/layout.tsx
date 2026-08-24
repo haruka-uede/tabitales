@@ -5,6 +5,7 @@ import SiteFooter from "@/components/SiteFooter";
 import CookieNotice from "@/components/CookieNotice";
 import Analytics from "@/components/Analytics";
 import AdSense from "@/components/AdSense";
+import ThemeProvider from "@/components/ThemeProvider";
 import { OG_IMAGE, SITE_NAME, SITE_URL, jsonLdScript } from "@/lib/site";
 import "../globals.css";
 
@@ -47,18 +48,21 @@ export default function JaRootLayout({
     <html
       lang="ja"
       className={`${geistSans.variable} ${geistMono.variable} h-full antialiased`}
+      suppressHydrationWarning
     >
       <body className="min-h-full flex flex-col">
-        <script
-          type="application/ld+json"
-          dangerouslySetInnerHTML={{ __html: jsonLdScript(organizationJsonLd) }}
-        />
-        <SiteHeader locale="ja" />
-        <div className="flex-1">{children}</div>
-        <SiteFooter locale="ja" />
-        <CookieNotice locale="ja" />
-        <Analytics />
-        <AdSense />
+        <ThemeProvider attribute="class" defaultTheme="system" enableSystem>
+          <script
+            type="application/ld+json"
+            dangerouslySetInnerHTML={{ __html: jsonLdScript(organizationJsonLd) }}
+          />
+          <SiteHeader locale="ja" />
+          <div className="flex-1">{children}</div>
+          <SiteFooter locale="ja" />
+          <CookieNotice locale="ja" />
+          <Analytics />
+          <AdSense />
+        </ThemeProvider>
       </body>
     </html>
   );

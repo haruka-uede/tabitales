@@ -7,6 +7,7 @@ export const dictionary = {
     nav: { guides: "Guides", authors: "Authors", destinations: "Destinations", collections: "Collections" },
     menu: { open: "Open menu", title: "Menu" },
     language: { switch: "Switch language" },
+    theme: { toggle: "Toggle theme", light: "Light", dark: "Dark", system: "System" },
     cookieNotice: {
       message: "This site uses cookies for analytics and affiliate link tracking. See our",
       privacyPolicy: "Privacy Policy",
@@ -27,6 +28,7 @@ export const dictionary = {
     nav: { guides: "作品", authors: "著者", destinations: "地域", collections: "特集" },
     menu: { open: "メニューを開く", title: "メニュー" },
     language: { switch: "言語を切り替える" },
+    theme: { toggle: "テーマを切り替える", light: "ライト", dark: "ダーク", system: "システム" },
     cookieNotice: {
       message: "本サイトはアクセス解析とアフィリエイトリンクの計測のためにクッキーを使用しています。詳細は",
       privacyPolicy: "プライバシーポリシー",
