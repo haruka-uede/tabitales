@@ -50,3 +50,7 @@ next-env.d.ts
 
 .vercel
 .env*
+
+# working notes from ad-hoc review/rewrite passes - not part of the site
+/_reviews/
+.claude/*.workflow.js
