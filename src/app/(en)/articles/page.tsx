@@ -1,8 +1,16 @@
-import { getAllArticles } from "@/lib/articles";
-import ArticleCard from "@/components/ArticleCard";
+import { Suspense } from "react";
+import { getAllArticles, getAllAuthors, getAllDestinations } from "@/lib/articles";
+import { buildArticleSearchIndex } from "@/lib/articleSearch";
+import { REGION_NAMES } from "@/lib/japanMap";
+import { slugify } from "@/lib/slug";
+import ArticlesExplorer from "@/components/ArticlesExplorer";
 
 export default function ArticlesIndexPage() {
   const articles = getAllArticles();
+  const authors = getAllAuthors();
+  const regionSlugs = new Set(REGION_NAMES.map(slugify));
+  const regions = getAllDestinations().filter((d) => regionSlugs.has(d.slug));
+  const searchIndex = buildArticleSearchIndex(articles, "en");
 
   return (
     <div className="max-w-4xl mx-auto px-6 py-12">
@@ -11,11 +19,14 @@ export default function ArticlesIndexPage() {
         Guides built around a single book — the real places behind one novel, retraced
         stop by stop.
       </p>
-      <div className="grid sm:grid-cols-2 gap-6">
-        {articles.map((article) => (
-          <ArticleCard key={article.slug} article={article} />
-        ))}
-      </div>
+      <Suspense>
+        <ArticlesExplorer
+          articles={articles}
+          searchIndex={searchIndex}
+          authors={authors}
+          regions={regions}
+        />
+      </Suspense>
     </div>
   );
 }

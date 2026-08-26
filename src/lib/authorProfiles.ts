@@ -6,6 +6,12 @@ export type AuthorProfile = {
   // romanized/untranslated on purpose - see .claude/commands/translate-article.md
   // and src/lib/slug.ts. Falls back to the romanized name if unset.
   nameJa?: string;
+  // Hiragana reading of nameJa, used only for あいうえお (gojuon) sorting.
+  // Kanji have no inherent reading, so `nameJa.localeCompare(other, "ja")`
+  // sorts by glyph shape, not pronunciation - this field is what makes a
+  // real gojuon-ordered sort possible. Falls back to nameJa (or the
+  // romanized name) where unset, same incremental pattern as nameJa itself.
+  yomiJa?: string;
   blurb?: string;
   // JA equivalent of blurb, not a translation pulled at render time - filled
   // in as needed, same incremental pattern as nameJa. Only shown on JA pages
@@ -18,6 +24,7 @@ export type AuthorProfile = {
 export const AUTHOR_PROFILES: Record<string, AuthorProfile> = {
   [slugify("Haruki Murakami")]: {
     nameJa: "村上春樹",
+    yomiJa: "むらかみはるき",
     blurb:
       "One of the most internationally recognized Japanese novelists. His Tokyo — jazz bars, quiet cafés, city walks — is a recurring backdrop across his fiction.",
     blurbJa:
@@ -25,6 +32,7 @@ export const AUTHOR_PROFILES: Record<string, AuthorProfile> = {
   },
   [slugify("Osamu Dazai")]: {
     nameJa: "太宰治",
+    yomiJa: "だざいおさむ",
     blurb:
       "Dazai's memoir Tsugaru retraces his rural hometown in northern Japan, from his family's preserved mansion in Kanagi to the remote coastal village of Kodomari.",
     blurbJa:
@@ -36,6 +44,7 @@ export const AUTHOR_PROFILES: Record<string, AuthorProfile> = {
   },
   [slugify("Natsume Soseki")]: {
     nameJa: "夏目漱石",
+    yomiJa: "なつめそうせき",
     blurb:
       "Widely considered the most important novelist of modern Japan. His novels map onto real places he lived and taught — from a Shikoku bathhouse to a Tokyo cemetery where he's actually buried.",
     blurbJa:
@@ -43,6 +52,7 @@ export const AUTHOR_PROFILES: Record<string, AuthorProfile> = {
   },
   [slugify("Junichiro Tanizaki")]: {
     nameJa: "谷崎潤一郎",
+    yomiJa: "たにざきじゅんいちろう",
     blurb:
       "Tanizaki lived out much of what he wrote in Naomi: in the early 1920s he moved to Yokohama's Westernized Yamate district and took up the same ballroom dancing and fashion he later gave his characters, before the 1923 Great Kanto Earthquake forced him to relocate to the Kansai region.",
     blurbJa:
@@ -50,6 +60,7 @@ export const AUTHOR_PROFILES: Record<string, AuthorProfile> = {
   },
   [slugify("Tatsuhiro Oshiro")]: {
     nameJa: "大城立裕",
+    yomiJa: "おおしろたつひろ",
     blurb:
       "Oshiro grew up in central Okinawa under the decades of U.S. military administration that followed the war, and became the first Okinawan-born author to win the Akutagawa Prize, for Cocktail Party in 1967.",
     blurbJa:
@@ -57,6 +68,7 @@ export const AUTHOR_PROFILES: Record<string, AuthorProfile> = {
   },
   [slugify("Masuji Ibuse")]: {
     nameJa: "井伏鱒二",
+    yomiJa: "いぶせますじ",
     blurb:
       "Ibuse wrote about ordinary lives with a dry, understated humor across a long career, most famously in Black Rain (1966) — built from a real atomic-bomb survivor's diary rather than an invented account.",
     blurbJa:
@@ -64,6 +76,7 @@ export const AUTHOR_PROFILES: Record<string, AuthorProfile> = {
   },
   [slugify("Ryunosuke Akutagawa")]: {
     nameJa: "芥川龍之介",
+    yomiJa: "あくたがわりゅうのすけ",
     blurb:
       "Often called the father of the Japanese short story, and the namesake of the Akutagawa Prize, Japan's top literary award for new writers. Spinning Gears, one of his last works, was finished weeks before his 1927 suicide, and reads as a near-direct record of the paranoia that consumed him.",
     blurbJa:
@@ -71,6 +84,7 @@ export const AUTHOR_PROFILES: Record<string, AuthorProfile> = {
   },
   [slugify("Murasaki Shikibu")]: {
     nameJa: "紫式部",
+    yomiJa: "むらさきしきぶ",
     blurb:
       "A lady-in-waiting at the Heian-era imperial court around the year 1000, and the author of The Tale of Genji — widely considered the world's first novel. Little is known of her real life beyond her own diary and the court records of the time; even \"Murasaki Shikibu\" is a later nickname, not her birth name, which was never recorded.",
     blurbJa:
@@ -78,6 +92,7 @@ export const AUTHOR_PROFILES: Record<string, AuthorProfile> = {
   },
   [slugify("Kenji Miyazawa")]: {
     nameJa: "宮沢賢治",
+    yomiJa: "みやざわけんじ",
     blurb:
       "A poet, children's-story writer, agricultural teacher, and devout Buddhist who spent nearly all of his short life in rural Iwate. Night on the Galactic Railroad, his best-known work, was still unfinished when he died of illness in 1933 at 37; it was assembled from his notebooks and published the following year.",
     blurbJa:
@@ -87,4 +102,9 @@ export const AUTHOR_PROFILES: Record<string, AuthorProfile> = {
 
 export function getAuthorNameJa(slug: string, fallback: string): string {
   return AUTHOR_PROFILES[slug]?.nameJa ?? fallback;
+}
+
+export function getAuthorSortKeyJa(slug: string, fallback: string): string {
+  const profile = AUTHOR_PROFILES[slug];
+  return profile?.yomiJa ?? profile?.nameJa ?? fallback;
 }
