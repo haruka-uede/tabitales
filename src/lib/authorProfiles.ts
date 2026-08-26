@@ -106,6 +106,14 @@ export const AUTHOR_PROFILES: Record<string, AuthorProfile> = {
     blurbJa:
       "川端康成は1968年、日本人として初めてノーベル文学賞を受賞した作家であり、『雪国』はその受賞理由の一つに挙げられている。1934年から温泉町・湯沢を繰り返し訪れ、定宿としていた旅館の一室で作品の一部を執筆した。",
   },
+  [slugify("Yukio Mishima")]: {
+    nameJa: "三島由紀夫",
+    yomiJa: "みしまゆきお",
+    blurb:
+      "One of postwar Japan's most internationally read novelists, and a lifelong obsessive about beauty and destruction. The Temple of the Golden Pavilion turns the real 1950 arson of Kyoto's Kinkaku-ji into a novel about a mind consumed by the thing it loves.",
+    blurbJa:
+      "三島由紀夫は、戦後日本を代表する国際的な知名度を持つ作家であり、美と破壊への強い執着を生涯持ち続けた。『金閣寺』は、1950年に実際に起きた京都・金閣寺放火事件を題材に、美に取り憑かれていく人間の内面を描いた作品である。",
+  },
 };
 
 export function getAuthorNameJa(slug: string, fallback: string): string {
