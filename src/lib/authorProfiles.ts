@@ -98,6 +98,14 @@ export const AUTHOR_PROFILES: Record<string, AuthorProfile> = {
     blurbJa:
       "宮沢賢治は、詩人・童話作家・農学校教師であり、熱心な法華信者でもあった。その短い生涯のほとんどを、故郷である岩手の農村で過ごしている。代表作『銀河鉄道の夜』は、1933年に37歳で病没した時点でも未完のままであり、残された手帳やノートをもとに翌年出版された。",
   },
+  [slugify("Yasunari Kawabata")]: {
+    nameJa: "川端康成",
+    yomiJa: "かわばたやすなり",
+    blurb:
+      "In 1968, Kawabata became the first Japanese writer to win the Nobel Prize in Literature, cited in part for Snow Country. He was a repeat visitor to the hot-spring town of Yuzawa starting in 1934, and wrote parts of the novel in a room at the inn where he stayed.",
+    blurbJa:
+      "川端康成は1968年、日本人として初めてノーベル文学賞を受賞した作家であり、『雪国』はその受賞理由の一つに挙げられている。1934年から温泉町・湯沢を繰り返し訪れ、定宿としていた旅館の一室で作品の一部を執筆した。",
+  },
 };
 
 export function getAuthorNameJa(slug: string, fallback: string): string {

@@ -24,6 +24,7 @@ export const WORK_NAMES_JA: Record<string, string> = {
   [slugify("Spinning Gears")]: "歯車",
   [slugify("The Tale of Genji")]: "源氏物語",
   [slugify("Night on the Galactic Railroad")]: "銀河鉄道の夜",
+  [slugify("Snow Country")]: "雪国",
 };
 
 export function getWorkNameJa(work: string): string {
