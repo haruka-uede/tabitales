@@ -1,6 +1,7 @@
 import { Suspense } from "react";
 import { getAllArticles, getAllAuthors, getAllDestinations } from "@/lib/articles";
 import { buildArticleSearchIndex } from "@/lib/articleSearch";
+import { topAuthorsByPageviews } from "@/lib/authorPopularity";
 import { REGION_NAMES } from "@/lib/japanMap";
 import { slugify } from "@/lib/slug";
 import ArticlesExplorer from "@/components/ArticlesExplorer";
@@ -9,7 +10,7 @@ export const metadata = { title: "本×旅行ガイド" };
 
 export default function JaArticlesIndexPage() {
   const articles = getAllArticles({ locale: "ja" });
-  const authors = getAllAuthors({ locale: "ja" });
+  const authors = topAuthorsByPageviews(getAllAuthors({ locale: "ja" }));
   const regionSlugs = new Set(REGION_NAMES.map(slugify));
   const regions = getAllDestinations({ locale: "ja" }).filter((d) => regionSlugs.has(d.slug));
   const searchIndex = buildArticleSearchIndex(articles, "ja");

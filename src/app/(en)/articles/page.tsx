@@ -1,13 +1,14 @@
 import { Suspense } from "react";
 import { getAllArticles, getAllAuthors, getAllDestinations } from "@/lib/articles";
 import { buildArticleSearchIndex } from "@/lib/articleSearch";
+import { topAuthorsByPageviews } from "@/lib/authorPopularity";
 import { REGION_NAMES } from "@/lib/japanMap";
 import { slugify } from "@/lib/slug";
 import ArticlesExplorer from "@/components/ArticlesExplorer";
 
 export default function ArticlesIndexPage() {
   const articles = getAllArticles();
-  const authors = getAllAuthors();
+  const authors = topAuthorsByPageviews(getAllAuthors());
   const regionSlugs = new Set(REGION_NAMES.map(slugify));
   const regions = getAllDestinations().filter((d) => regionSlugs.has(d.slug));
   const searchIndex = buildArticleSearchIndex(articles, "en");

@@ -1,0 +1,56 @@
+{
+  "generatedAt": "2026-08-26T12:41:27.936Z",
+  "windowDays": 30,
+  "authors": [
+    {
+      "slug": "natsume-soseki",
+      "name": "Natsume Soseki",
+      "pageviews": 51
+    },
+    {
+      "slug": "junichiro-tanizaki",
+      "name": "Junichiro Tanizaki",
+      "pageviews": 16
+    },
+    {
+      "slug": "haruki-murakami",
+      "name": "Haruki Murakami",
+      "pageviews": 12
+    },
+    {
+      "slug": "masuji-ibuse",
+      "name": "Masuji Ibuse",
+      "pageviews": 10
+    },
+    {
+      "slug": "osamu-dazai",
+      "name": "Osamu Dazai",
+      "pageviews": 4
+    },
+    {
+      "slug": "murasaki-shikibu",
+      "name": "Murasaki Shikibu",
+      "pageviews": 4
+    },
+    {
+      "slug": "tatsuhiro-oshiro",
+      "name": "Tatsuhiro Oshiro",
+      "pageviews": 2
+    },
+    {
+      "slug": "ryunosuke-akutagawa",
+      "name": "Ryunosuke Akutagawa",
+      "pageviews": 0
+    },
+    {
+      "slug": "yasunari-kawabata",
+      "name": "Yasunari Kawabata",
+      "pageviews": 0
+    },
+    {
+      "slug": "kenji-miyazawa",
+      "name": "Kenji Miyazawa",
+      "pageviews": 0
+    }
+  ]
+}

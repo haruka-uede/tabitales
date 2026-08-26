@@ -20,7 +20,7 @@ type SortKey = "newest" | "author";
 const COPY = {
   en: {
     searchPlaceholder: "Search by title, author, place…",
-    author: "Author",
+    author: "Popular authors",
     region: "Region",
     allAuthors: "All authors",
     allRegions: "All regions",
@@ -35,7 +35,7 @@ const COPY = {
   },
   ja: {
     searchPlaceholder: "タイトル・著者・地名で検索",
-    author: "著者",
+    author: "人気の著者",
     region: "地域",
     allAuthors: "すべての著者",
     allRegions: "すべての地域",
